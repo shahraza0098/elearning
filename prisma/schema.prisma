@@ -1,0 +1,368 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+
+
+//Billing Interval
+enum BillingInterval {
+  MONTHLY
+  YEARLY
+}
+//Subscription Status
+enum SubscriptionStatus {
+  CREATED
+  AUTHENTICATED
+  ACTIVE
+  PAUSED
+  CANCELLED
+  EXPIRED
+}
+//Payment Status
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+}
+
+
+
+enum EnrollmentStatus {
+  ACTIVE
+  EXPIRED
+}
+
+enum NotificationType {
+  COURSE
+  PAYMENT
+  GENERAL
+}
+
+enum CourseLevel{
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+model User {
+  id              String   @id @default(cuid())
+  clerkUserId     String   @unique
+  name            String
+  username        String   @unique
+  email           String   @unique
+  phone           String   @unique
+  image           String?
+  role            Role     @default(STUDENT)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+
+  lessonProgress  LessonProgress[]
+  payments        Payment[]
+  reviews         Review[]
+  certificates    Certificate[]
+  notifications   Notification[]
+
+  subscription Subscription?
+
+  @@index([email])
+  @@index([username])
+}
+// category:
+
+
+model Category {
+  id          String @id @default(cuid())
+  name        String @unique
+  slug        String @unique
+  tags        String[]
+  bannerUrl   String
+
+  courses     Course[]
+}
+
+//course
+
+model Course {
+  id              String @id @default(cuid())
+
+  title           String
+  slug            String @unique
+  description     String @db.Text
+  position Int
+  thumbnailUrl    String
+
+  price           Decimal @db.Decimal(10,2)
+  isPublished     Boolean @default(false)
+
+  totalDuration   Int? // seconds
+  level CourseLevel @default(BEGINNER)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  deletedAt       DateTime?
+  categoryId      String
+  category        Category @relation(fields: [categoryId], references: [id])
+
+  sections        Section[]
+
+  reviews         Review[]
+  certificates    Certificate[]
+}
+
+//section 
+
+model Section {
+  id          String @id @default(cuid())
+
+  title       String
+  position    Int
+
+  courseId    String
+  course      Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  lessons     Lesson[]
+
+  @@index([courseId])
+}
+
+//lesson
+
+model Lesson {
+  id              String @id @default(cuid())
+
+  title           String
+  description     String? @db.Text
+  slug            String @unique
+  position        Int
+
+  duration        Int
+
+  videoId String @unique
+ // videoUrl        String?
+
+  thumbnailUrl    String?
+
+  isPreview       Boolean @default(false)
+
+  sectionId       String
+  section         Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  progress        LessonProgress[]
+
+  @@index([sectionId])
+}
+
+
+
+//lesson progress
+
+model LessonProgress {
+  id               String @id @default(cuid())
+
+  userId           String
+  lessonId         String
+
+  watchedSeconds   Int @default(0)
+
+  completed        Boolean @default(false)
+
+  updatedAt        DateTime @updatedAt
+
+  user             User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson           Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+}
+
+
+//payments
+
+// model Payment {
+//   id                  String @id @default(cuid())
+
+//   amount              Decimal @db.Decimal(10,2)
+
+//   status              PaymentStatus
+
+//   razorpayOrderId     String?
+//   razorpayPaymentId   String?
+
+//   userId              String
+//   user                User @relation(fields: [userId], references: [id])
+
+//   createdAt           DateTime @default(now())
+
+//   @@index([userId])
+// }
+
+
+//review
+
+model Review {
+  id            String @id @default(cuid())
+
+  rating        Int
+  comment       String? @db.Text
+
+  userId        String
+  courseId      String
+
+  createdAt     DateTime @default(now())
+
+  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course        Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+}
+
+//certificate
+
+model Certificate {
+  id              String @id @default(cuid())
+
+  certificateNo   String @unique
+
+  pdfUrl          String
+
+  userId          String
+  courseId        String
+  completedAt DateTime
+  issuedAt        DateTime @default(now())
+
+  user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course          Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+//notification
+
+model Notification {
+  id              String @id @default(cuid())
+
+  title           String
+  message         String @db.Text
+
+  type            NotificationType
+
+  readAt DateTime?
+
+  userId          String
+  user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime @default(now())
+
+  @@index([userId])
+}
+
+
+//subscription
+
+
+model Plan {
+  id                    String @id @default(cuid())
+
+  name                  String
+  description           String?
+  trialDays             Int @default(30)
+  price                 Decimal @db.Decimal(10,2)
+
+  billingInterval       BillingInterval
+
+  trialAmount           Decimal @db.Decimal(10,2) @default(1)
+
+  razorpayPlanId        String @unique
+
+  isActive              Boolean @default(true)
+
+  subscriptions         Subscription[]
+
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+
+model Subscription {
+  id                        String @id @default(cuid())
+
+  userId                    String @unique
+  planId                    String
+
+  razorpaySubscriptionId    String @unique
+
+  status                    SubscriptionStatus
+
+  currentPeriodStart        DateTime?
+  currentPeriodEnd          DateTime?
+
+  nextChargeAt              DateTime?
+
+  cancelledAt               DateTime?
+
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  user                      User @relation(fields:[userId], references:[id], onDelete: Cascade)
+  plan                      Plan @relation(fields:[planId], references:[id])
+
+  payments                  Payment[]
+
+  @@index([userId])
+  @@index([status])
+@@index([nextChargeAt])
+}
+
+
+model Payment {
+  id                      String @id @default(cuid())
+
+  amount                  Decimal @db.Decimal(10,2)
+
+  status                  PaymentStatus
+
+  razorpayPaymentId       String? @unique
+
+  razorpayOrderId         String?
+
+  razorpayInvoiceId String?
+  razorpaySignature String?
+  failureReason String?
+
+  paidAt                  DateTime?
+
+  userId                  String
+  subscriptionId          String?
+
+  user                    User @relation(fields:[userId], references:[id], onDelete: Cascade)
+
+  subscription            Subscription? @relation(fields:[subscriptionId], references:[id])
+
+  createdAt               DateTime @default(now())
+ 
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([status])
+@@index([createdAt])
+}
+
+
+
+
+
