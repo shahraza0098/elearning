@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import { useForm, useWatch } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -32,10 +33,14 @@ export default function CourseForm({
   onCancel,
   initialValues = null,
 }) {
+  const [submitError, setSubmitError] = useState('')
+  const [thumbnailFile, setThumbnailFile] = useState(null)
+  const [thumbnailPreview, setThumbnailPreview] = useState('')
+
   const {
+    control,
     register,
     handleSubmit,
-    watch,
     setValue,
     reset,
     formState: { errors, isSubmitting },
@@ -45,7 +50,11 @@ export default function CourseForm({
       slug: '',
       description: '',
       categoryId: '',
+      thumbnailUrl: '',
       price: '',
+      position: 0,
+      totalDuration: '',
+      level: 'BEGINNER',
       isPublished: false,
     },
   })
@@ -56,8 +65,11 @@ export default function CourseForm({
     }
   }, [initialValues, reset])
 
-  const title = watch('title')
-  const isPublished = watch('isPublished')
+  const title = useWatch({ control, name: 'title' })
+  const categoryId = useWatch({ control, name: 'categoryId' })
+  const level = useWatch({ control, name: 'level' })
+  const thumbnailUrl = useWatch({ control, name: 'thumbnailUrl' })
+  const isPublished = useWatch({ control, name: 'isPublished' })
 
   useEffect(() => {
     if (!initialValues) {
@@ -65,9 +77,83 @@ export default function CourseForm({
     }
   }, [title, initialValues, setValue])
 
+  useEffect(() => {
+    return () => {
+      if (thumbnailPreview.startsWith('blob:')) {
+        URL.revokeObjectURL(thumbnailPreview)
+      }
+    }
+  }, [thumbnailPreview])
+
+  const handleThumbnailFileChange = (event) => {
+    const file = event.target.files?.[0] ?? null
+
+    if (thumbnailPreview.startsWith('blob:')) {
+      URL.revokeObjectURL(thumbnailPreview)
+    }
+
+    setThumbnailFile(file)
+    setThumbnailPreview(file ? URL.createObjectURL(file) : '')
+  }
+
+  const handleFormSubmit = async (values) => {
+    setSubmitError('')
+
+    try {
+      let uploadedThumbnailUrl = values.thumbnailUrl?.trim() ?? ''
+
+      if (thumbnailFile) {
+        const uploadFormData = new FormData()
+        uploadFormData.append('file', thumbnailFile)
+
+        const uploadResponse = await fetch(
+          '/api/admin/upload/course-thumbnail',
+          {
+            method: 'POST',
+            body: uploadFormData,
+          }
+        )
+
+        const uploadPayload = await uploadResponse.json().catch(() => null)
+
+        if (!uploadResponse.ok) {
+          throw new Error(
+            uploadPayload?.message ||
+              'Failed to upload course banner image.'
+          )
+        }
+
+        uploadedThumbnailUrl =
+          uploadPayload?.data?.publicUrl ?? uploadedThumbnailUrl
+      }
+
+      if (!uploadedThumbnailUrl) {
+        throw new Error(
+          'Please upload a course banner image or provide a thumbnail URL.'
+        )
+      }
+
+      await onSubmit({
+        ...values,
+        thumbnailUrl: uploadedThumbnailUrl,
+        totalDuration:
+          values.totalDuration === '' ||
+          values.totalDuration === null ||
+          values.totalDuration === undefined
+            ? null
+            : values.totalDuration,
+      })
+    } catch (error) {
+      setSubmitError(error.message || 'Failed to save course.')
+    }
+  }
+
+  const resolvedThumbnailPreview =
+    thumbnailPreview || thumbnailUrl || initialValues?.thumbnailUrl || ''
+
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(handleFormSubmit)}
       className="space-y-6"
     >
       {/* Title */}
@@ -136,7 +222,7 @@ export default function CourseForm({
           onValueChange={(value) =>
             setValue('categoryId', value)
           }
-          defaultValue={watch('categoryId')}
+          value={categoryId || undefined}
         >
           <SelectTrigger>
             <SelectValue placeholder="Select Category" />
@@ -168,25 +254,155 @@ export default function CourseForm({
         )}
       </div>
 
-      {/* Price */}
+      {/* Thumbnail */}
 
       <div className="space-y-2">
-        <Label>Price</Label>
+        <Label>Course Banner URL</Label>
 
         <Input
-          type="number"
-          placeholder="499"
-          {...register('price', {
-            required: 'Price is required',
-            valueAsNumber: true,
-          })}
+          type="url"
+          placeholder="https://images.example.com/course-cover.jpg"
+          {...register('thumbnailUrl')}
         />
 
-        {errors.price && (
-          <p className="text-sm text-red-500">
-            {errors.price.message}
-          </p>
-        )}
+        <p className="text-xs text-muted-foreground">
+          Paste an image URL, or upload a banner below.
+        </p>
+      </div>
+
+      <div className="space-y-2">
+        <Label>Upload Course Banner</Label>
+
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={handleThumbnailFileChange}
+        />
+
+        <p className="text-xs text-muted-foreground">
+          JPG, PNG, WEBP, or similar image files up to 5MB.
+        </p>
+
+        {resolvedThumbnailPreview ? (
+          <div className="relative h-44 overflow-hidden rounded-lg border bg-muted">
+            <Image
+              src={resolvedThumbnailPreview}
+              alt="Course banner preview"
+              fill
+              unoptimized
+              className="object-cover"
+            />
+          </div>
+        ) : null}
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="space-y-2">
+          <Label>Level</Label>
+
+          <Select
+            value={level}
+            onValueChange={(value) => setValue('level', value)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select level" />
+            </SelectTrigger>
+
+            <SelectContent>
+              <SelectItem value="BEGINNER">
+                Beginner
+              </SelectItem>
+              <SelectItem value="INTERMEDIATE">
+                Intermediate
+              </SelectItem>
+              <SelectItem value="ADVANCED">
+                Advanced
+              </SelectItem>
+            </SelectContent>
+          </Select>
+
+          <input
+            type="hidden"
+            {...register('level')}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>Position</Label>
+
+          <Input
+            type="number"
+            min="0"
+            step="1"
+            placeholder="0"
+            {...register('position', {
+              required: 'Position is required',
+              valueAsNumber: true,
+              min: {
+                value: 0,
+                message: 'Position must be 0 or greater',
+              },
+            })}
+          />
+
+          {errors.position && (
+            <p className="text-sm text-red-500">
+              {errors.position.message}
+            </p>
+          )}
+        </div>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="space-y-2">
+          <Label>Price</Label>
+
+          <Input
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="499"
+            {...register('price', {
+              required: 'Price is required',
+              valueAsNumber: true,
+              min: {
+                value: 0,
+                message: 'Price must be 0 or greater',
+              },
+            })}
+          />
+
+          {errors.price && (
+            <p className="text-sm text-red-500">
+              {errors.price.message}
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label>Total Duration (seconds)</Label>
+
+          <Input
+            type="number"
+            min="0"
+            step="1"
+            placeholder="5400"
+            {...register('totalDuration', {
+              setValueAs: (value) =>
+                value === '' ? '' : Number(value),
+              validate: (value) =>
+                value === '' ||
+                (Number.isInteger(value) && value >= 0) ||
+                'Duration must be a non-negative integer',
+            })}
+          />
+
+          {errors.totalDuration && (
+            <p className="text-sm text-red-500">
+              {errors.totalDuration.message}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Publish */}
@@ -208,6 +424,12 @@ export default function CourseForm({
           }
         />
       </div>
+
+      {submitError && (
+        <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600">
+          {submitError}
+        </p>
+      )}
 
       {/* Buttons */}
 

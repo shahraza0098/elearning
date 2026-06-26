@@ -29,6 +29,7 @@ export default function CourseCard({
           <Image
             src={course.thumbnailUrl}
             alt={course.title}
+            unoptimized
             fill
             className="object-cover"
           />
