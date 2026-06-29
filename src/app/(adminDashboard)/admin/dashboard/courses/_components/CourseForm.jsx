@@ -154,300 +154,316 @@ export default function CourseForm({
   return (
     <form
       onSubmit={handleSubmit(handleFormSubmit)}
-      className="space-y-6"
+      className="mx-auto max-w-4xl space-y-8 pb-10"
     >
-      {/* Title */}
-
-      <div className="space-y-2">
-        <Label>Course Title</Label>
-
-        <Input
-          placeholder="React Masterclass"
-          {...register('title', {
-            required: 'Course title is required',
-          })}
-        />
-
-        {errors.title && (
-          <p className="text-sm text-red-500">
-            {errors.title.message}
-          </p>
-        )}
-      </div>
-
-      {/* Slug */}
-
-      <div className="space-y-2">
-        <Label>Slug</Label>
-
-        <Input
-          {...register('slug', {
-            required: 'Slug is required',
-          })}
-        />
-
-        {errors.slug && (
-          <p className="text-sm text-red-500">
-            {errors.slug.message}
-          </p>
-        )}
-      </div>
-
-      {/* Description */}
-
-      <div className="space-y-2">
-        <Label>Description</Label>
-
-        <Textarea
-          rows={5}
-          placeholder="Course description..."
-          {...register('description', {
-            required: 'Description is required',
-          })}
-        />
-
-        {errors.description && (
-          <p className="text-sm text-red-500">
-            {errors.description.message}
-          </p>
-        )}
-      </div>
-
-      {/* Category */}
-
-      <div className="space-y-2">
-        <Label>Category</Label>
-
-        <Select
-          onValueChange={(value) =>
-            setValue('categoryId', value)
-          }
-          value={categoryId || undefined}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Select Category" />
-          </SelectTrigger>
-
-          <SelectContent>
-            {categories.map((category) => (
-              <SelectItem
-                key={category.id}
-                value={category.id}
-              >
-                {category.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-
-        <input
-          type="hidden"
-          {...register('categoryId', {
-            required: 'Category is required',
-          })}
-        />
-
-        {errors.categoryId && (
-          <p className="text-sm text-red-500">
-            {errors.categoryId.message}
-          </p>
-        )}
-      </div>
-
-      {/* Thumbnail */}
-
-      <div className="space-y-2">
-        <Label>Course Banner URL</Label>
-
-        <Input
-          type="url"
-          placeholder="https://images.example.com/course-cover.jpg"
-          {...register('thumbnailUrl')}
-        />
-
-        <p className="text-xs text-muted-foreground">
-          Paste an image URL, or upload a banner below.
-        </p>
-      </div>
-
-      <div className="space-y-2">
-        <Label>Upload Course Banner</Label>
-
-        <Input
-          type="file"
-          accept="image/*"
-          onChange={handleThumbnailFileChange}
-        />
-
-        <p className="text-xs text-muted-foreground">
-          JPG, PNG, WEBP, or similar image files up to 5MB.
-        </p>
-
-        {resolvedThumbnailPreview ? (
-          <div className="relative h-44 overflow-hidden rounded-lg border bg-muted">
-            <Image
-              src={resolvedThumbnailPreview}
-              alt="Course banner preview"
-              fill
-              unoptimized
-              className="object-cover"
-            />
-          </div>
-        ) : null}
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2">
-        <div className="space-y-2">
-          <Label>Level</Label>
-
-          <Select
-            value={level}
-            onValueChange={(value) => setValue('level', value)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select level" />
-            </SelectTrigger>
-
-            <SelectContent>
-              <SelectItem value="BEGINNER">
-                Beginner
-              </SelectItem>
-              <SelectItem value="INTERMEDIATE">
-                Intermediate
-              </SelectItem>
-              <SelectItem value="ADVANCED">
-                Advanced
-              </SelectItem>
-            </SelectContent>
-          </Select>
-
-          <input
-            type="hidden"
-            {...register('level')}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label>Position</Label>
-
-          <Input
-            type="number"
-            min="0"
-            step="1"
-            placeholder="0"
-            {...register('position', {
-              required: 'Position is required',
-              valueAsNumber: true,
-              min: {
-                value: 0,
-                message: 'Position must be 0 or greater',
-              },
-            })}
-          />
-
-          {errors.position && (
-            <p className="text-sm text-red-500">
-              {errors.position.message}
-            </p>
-          )}
-        </div>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2">
-        <div className="space-y-2">
-          <Label>Price</Label>
-
-          <Input
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="499"
-            {...register('price', {
-              required: 'Price is required',
-              valueAsNumber: true,
-              min: {
-                value: 0,
-                message: 'Price must be 0 or greater',
-              },
-            })}
-          />
-
-          {errors.price && (
-            <p className="text-sm text-red-500">
-              {errors.price.message}
-            </p>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <Label>Total Duration (seconds)</Label>
-
-          <Input
-            type="number"
-            min="0"
-            step="1"
-            placeholder="5400"
-            {...register('totalDuration', {
-              setValueAs: (value) =>
-                value === '' ? '' : Number(value),
-              validate: (value) =>
-                value === '' ||
-                (Number.isInteger(value) && value >= 0) ||
-                'Duration must be a non-negative integer',
-            })}
-          />
-
-          {errors.totalDuration && (
-            <p className="text-sm text-red-500">
-              {errors.totalDuration.message}
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* Publish */}
-
-      <div className="flex items-center justify-between rounded-lg border p-4">
-        <div>
-          <Label>Publish Course</Label>
-
-          <p className="text-sm text-muted-foreground">
-            Students can access this course only if
-            published.
-          </p>
-        </div>
-
-        <Switch
-          checked={isPublished}
-          onCheckedChange={(value) =>
-            setValue('isPublished', value)
-          }
-        />
-      </div>
-
       {submitError && (
-        <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600">
-          {submitError}
-        </p>
+        <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
+          <p className="font-medium">Hold up!</p>
+          <p>{submitError}</p>
+        </div>
       )}
 
-      {/* Buttons */}
+      {/* Basic Information Section */}
+      <div className="space-y-6 rounded-xl border bg-card p-6 text-card-foreground shadow-sm">
+        <div>
+          <h3 className="text-lg font-semibold leading-none tracking-tight">
+            Basic Information
+          </h3>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Provide the core details and description for this course.
+          </p>
+        </div>
+        
+        <div className="h-px bg-border" />
 
-      <div className="flex justify-end gap-3">
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Title */}
+          <div className="space-y-2">
+            <Label htmlFor="title">Course Title</Label>
+            <Input
+              id="title"
+              placeholder="e.g. React Masterclass"
+              {...register('title', {
+                required: 'Course title is required',
+              })}
+            />
+            {errors.title && (
+              <p className="text-[0.8rem] font-medium text-destructive">
+                {errors.title.message}
+              </p>
+            )}
+          </div>
+
+          {/* Slug */}
+          <div className="space-y-2">
+            <Label htmlFor="slug">URL Slug</Label>
+            <Input
+              id="slug"
+              placeholder="e.g. react-masterclass"
+              className="bg-muted/50"
+              {...register('slug', {
+                required: 'Slug is required',
+              })}
+            />
+            {errors.slug && (
+              <p className="text-[0.8rem] font-medium text-destructive">
+                {errors.slug.message}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Description */}
+        <div className="space-y-2">
+          <Label htmlFor="description">Description</Label>
+          <Textarea
+            id="description"
+            rows={5}
+            className="resize-none"
+            placeholder="What will students learn in this course?"
+            {...register('description', {
+              required: 'Description is required',
+            })}
+          />
+          {errors.description && (
+            <p className="text-[0.8rem] font-medium text-destructive">
+              {errors.description.message}
+            </p>
+          )}
+        </div>
+
+        {/* Category */}
+        <div className="space-y-2">
+          <Label>Category</Label>
+          <Select
+            onValueChange={(value) => setValue('categoryId', value)}
+            value={categoryId || undefined}
+          >
+            <SelectTrigger className="w-full md:w-[50%]">
+              <SelectValue placeholder="Select a relevant category" />
+            </SelectTrigger>
+            <SelectContent>
+              {categories.map((category) => (
+                <SelectItem key={category.id} value={category.id}>
+                  {category.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <input
+            type="hidden"
+            {...register('categoryId', {
+              required: 'Category is required',
+            })}
+          />
+          {errors.categoryId && (
+            <p className="text-[0.8rem] font-medium text-destructive">
+              {errors.categoryId.message}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Media Section */}
+      <div className="space-y-6 rounded-xl border bg-card p-6 text-card-foreground shadow-sm">
+        <div>
+          <h3 className="text-lg font-semibold leading-none tracking-tight">
+            Course Media
+          </h3>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Upload a compelling banner image to attract students.
+          </p>
+        </div>
+
+        <div className="h-px bg-border" />
+
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* File Upload */}
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>Upload Course Banner</Label>
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={handleThumbnailFileChange}
+                className="cursor-pointer file:text-foreground"
+              />
+              <p className="text-[0.8rem] text-muted-foreground">
+                Recommended: 1280x720px (JPG, PNG, WEBP). Max 5MB.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <div className="relative flex items-center py-2">
+                <div className="grow border-t border-muted" />
+                <span className="mx-2 text-xs text-muted-foreground uppercase">or</span>
+                <div className="grow border-t border-muted" />
+              </div>
+              
+              <Label>Course Banner URL</Label>
+              <Input
+                type="url"
+                placeholder="https://images.example.com/course-cover.jpg"
+                {...register('thumbnailUrl')}
+              />
+            </div>
+          </div>
+
+          {/* Preview Area */}
+          <div className="flex flex-col space-y-2">
+            <Label>Preview</Label>
+            {resolvedThumbnailPreview ? (
+              <div className="relative aspect-video w-full overflow-hidden rounded-lg border bg-muted shadow-inner">
+                <Image
+                  src={resolvedThumbnailPreview}
+                  alt="Course banner preview"
+                  fill
+                  unoptimized
+                  className="object-cover transition-all hover:scale-105"
+                />
+              </div>
+            ) : (
+              <div className="flex aspect-video w-full items-center justify-center rounded-lg border border-dashed bg-muted/50">
+                <p className="text-sm text-muted-foreground">No image selected</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Configuration Section */}
+      <div className="space-y-6 rounded-xl border bg-card p-6 text-card-foreground shadow-sm">
+        <div>
+          <h3 className="text-lg font-semibold leading-none tracking-tight">
+            Course Configuration
+          </h3>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Set the difficulty, pricing, and structural details.
+          </p>
+        </div>
+
+        <div className="h-px bg-border" />
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="space-y-2">
+            <Label>Level</Label>
+            <Select
+              value={level}
+              onValueChange={(value) => setValue('level', value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select course level" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="BEGINNER">Beginner</SelectItem>
+                <SelectItem value="INTERMEDIATE">Intermediate</SelectItem>
+                <SelectItem value="ADVANCED">Advanced</SelectItem>
+              </SelectContent>
+            </Select>
+            <input type="hidden" {...register('level')} />
+          </div>
+
+          <div className="space-y-2">
+            <Label>Position (Sorting Order)</Label>
+            <Input
+              type="number"
+              min="0"
+              step="1"
+              placeholder="0"
+              {...register('position', {
+                required: 'Position is required',
+                valueAsNumber: true,
+                min: {
+                  value: 0,
+                  message: 'Position must be 0 or greater',
+                },
+              })}
+            />
+            {errors.position && (
+              <p className="text-[0.8rem] font-medium text-destructive">
+                {errors.position.message}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label>Price (USD)</Label>
+            <div className="relative">
+              <span className="absolute left-3 top-2.5 text-sm text-muted-foreground">$</span>
+              <Input
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="49.99"
+                className="pl-7"
+                {...register('price', {
+                  required: 'Price is required',
+                  valueAsNumber: true,
+                  min: {
+                    value: 0,
+                    message: 'Price must be 0 or greater',
+                  },
+                })}
+              />
+            </div>
+            {errors.price && (
+              <p className="text-[0.8rem] font-medium text-destructive">
+                {errors.price.message}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label>Total Duration (Seconds)</Label>
+            <Input
+              type="number"
+              min="0"
+              step="1"
+              placeholder="e.g. 5400 (1.5 hours)"
+              {...register('totalDuration', {
+                setValueAs: (value) => (value === '' ? '' : Number(value)),
+                validate: (value) =>
+                  value === '' ||
+                  (Number.isInteger(value) && value >= 0) ||
+                  'Duration must be a non-negative integer',
+              })}
+            />
+            {errors.totalDuration && (
+              <p className="text-[0.8rem] font-medium text-destructive">
+                {errors.totalDuration.message}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Publish Section */}
+      <div className="flex items-center justify-between rounded-xl border bg-card p-6 text-card-foreground shadow-sm">
+        <div className="space-y-1">
+          <Label className="text-base">Publish Course</Label>
+          <p className="text-sm text-muted-foreground">
+            Turn this on to make the course visible and accessible to students.
+          </p>
+        </div>
+        <Switch
+          checked={isPublished}
+          onCheckedChange={(value) => setValue('isPublished', value)}
+        />
+      </div>
+
+      {/* Sticky Bottom Actions */}
+      <div className="sticky bottom-0 z-10 flex items-center justify-end gap-4 border-t bg-background/80 px-4 py-4 backdrop-blur-md sm:px-0">
         <Button
           type="button"
-          variant="outline"
+          variant="ghost"
           onClick={onCancel}
+          disabled={isSubmitting}
         >
           Cancel
         </Button>
-
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-        >
+        <Button type="submit" disabled={isSubmitting} className="min-w-[140px]">
           {isSubmitting
-            ? 'Saving...'
+            ? 'Saving Changes...'
             : initialValues
             ? 'Update Course'
             : 'Create Course'}

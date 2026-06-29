@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
 import useCourses from '@/hooks/useCourses'
@@ -10,6 +11,7 @@ import CourseToolbar from './_components/CourseToolbar'
 import CourseGrid from './_components/CourseGrid'
 
 export default function CoursePage() {
+  const router = useRouter()
   const {
     courses,
     loading,
@@ -24,10 +26,7 @@ export default function CoursePage() {
   const [deleting, setDeleting] = useState(false)
 
   const handleView = (course) => {
-    console.log('View:', course)
-
-    // TODO:
-    // router.push(`/dashboard/courses/${course.id}`)
+    router.push(`/admin/dashboard/courses/${course.id}`)
   }
 
   const handleEdit = (course) => {

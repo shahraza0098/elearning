@@ -20,8 +20,28 @@ export default function CourseCard({
   onEdit,
   onDelete,
 }) {
+  const handleCardClick = () => {
+    onView?.(course)
+  }
+
+  const stopPropagation = (event, callback) => {
+    event.stopPropagation()
+    callback?.(course)
+  }
+
   return (
-    <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
+    <Card
+      className="cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg"
+      onClick={handleCardClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          handleCardClick()
+        }
+      }}
+    >
       {/* Thumbnail */}
 
       <div className="relative h-48 w-full bg-muted">
@@ -106,7 +126,7 @@ export default function CourseCard({
           <Button
             size="icon"
             variant="outline"
-            onClick={() => onView(course)}
+            onClick={(event) => stopPropagation(event, onView)}
           >
             <Eye className="h-4 w-4" />
           </Button>
@@ -114,7 +134,7 @@ export default function CourseCard({
           <Button
             size="icon"
             variant="secondary"
-            onClick={() => onEdit(course)}
+            onClick={(event) => stopPropagation(event, onEdit)}
           >
             <Pencil className="h-4 w-4" />
           </Button>
@@ -122,7 +142,7 @@ export default function CourseCard({
           <Button
             size="icon"
             variant="destructive"
-            onClick={() => onDelete(course)}
+            onClick={(event) => stopPropagation(event, onDelete)}
           >
             <Trash2 className="h-4 w-4" />
           </Button>
