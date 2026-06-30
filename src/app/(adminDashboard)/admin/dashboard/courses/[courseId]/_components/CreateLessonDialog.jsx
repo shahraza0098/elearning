@@ -12,6 +12,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import useBunnyUpload from '@/hooks/useBunnyUpload'
 
 function createSlug(value) {
   return value
@@ -43,10 +44,13 @@ export default function CreateLessonDialog({
   const [formState, setFormState] = useState(buildInitialState(defaultPosition))
   const [errorMessage, setErrorMessage] = useState('')
   const [isSaving, setIsSaving] = useState(false)
+  const [selectedVideoFile, setSelectedVideoFile] = useState(null)
+  const { uploadVideo, uploading } = useBunnyUpload()
 
   const resetState = () => {
     setFormState(buildInitialState(defaultPosition))
     setErrorMessage('')
+    setSelectedVideoFile(null)
   }
 
   const handleOpenChange = (nextOpen) => {
@@ -80,6 +84,17 @@ export default function CreateLessonDialog({
     setErrorMessage('')
 
     try {
+      let videoId = formState.videoId.trim()
+
+      if (selectedVideoFile) {
+        const uploadedVideo = await uploadVideo(selectedVideoFile, formState.title)
+        videoId = uploadedVideo?.videoId || videoId
+      }
+
+      if (!videoId) {
+        throw new Error('Please upload a video or enter a Video ID.')
+      }
+
       const response = await fetch('/api/admin/lesson', {
         method: 'POST',
         headers: {
@@ -91,7 +106,7 @@ export default function CreateLessonDialog({
           description: formState.description || undefined,
           position: Number(formState.position),
           duration: Number(formState.duration),
-          videoId: formState.videoId,
+          videoId,
           thumbnailUrl: formState.thumbnailUrl || undefined,
           isPreview: formState.isPreview,
           sectionId,
@@ -205,12 +220,29 @@ export default function CreateLessonDialog({
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 sm:col-span-2">
+              <label className="text-sm font-medium text-foreground">
+                Upload video for Bunny Stream
+              </label>
+              <input
+                type="file"
+                accept="video/*"
+                onChange={(event) => {
+                  const file = event.target.files?.[0] ?? null
+                  setSelectedVideoFile(file)
+                }}
+                className="w-full rounded-lg border border-input bg-background px-3 py-2 outline-none transition focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+              />
+              <p className="text-sm text-muted-foreground">
+                Upload a video here to create a Bunny Stream asset. Leave it blank to use a manual Video ID.
+              </p>
+            </div>
+
+            <div className="space-y-2 sm:col-span-2">
               <label className="text-sm font-medium text-foreground">
                 Video ID
               </label>
               <input
-                required
                 type="text"
                 value={formState.videoId}
                 onChange={(event) =>
@@ -298,8 +330,8 @@ export default function CreateLessonDialog({
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isSaving}>
-              {isSaving ? 'Saving...' : 'Create Lesson'}
+            <Button type="submit" disabled={isSaving || uploading}>
+              {uploading ? 'Uploading video...' : isSaving ? 'Saving...' : 'Create Lesson'}
             </Button>
           </DialogFooter>
         </form>
