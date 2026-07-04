@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import useBunnyUpload from '@/hooks/useBunnyUpload'
+import { uploadToBunny } from '@/lib/tus-upload';
 
 function createSlug(value) {
   return value
@@ -45,7 +46,8 @@ export default function CreateLessonDialog({
   const [errorMessage, setErrorMessage] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const [selectedVideoFile, setSelectedVideoFile] = useState(null)
-  const { uploadVideo, uploading } = useBunnyUpload()
+  const [uploadingProgress, setUploadingProgress] = useState(0)
+  const { uploadVideo, uploading, progress, pauseUpload, resumeUpload, cancelUpload } = useBunnyUpload()
 
   const resetState = () => {
     setFormState(buildInitialState(defaultPosition))
@@ -84,12 +86,18 @@ export default function CreateLessonDialog({
     setErrorMessage('')
 
     try {
-      let videoId = formState.videoId.trim()
+     let videoId = formState.videoId.trim()
 
-      if (selectedVideoFile) {
-        const uploadedVideo = await uploadVideo(selectedVideoFile, formState.title)
-        videoId = uploadedVideo?.videoId || videoId
-      }
+if (selectedVideoFile) {
+  const uploadedVideo = await uploadToBunny(
+    selectedVideoFile,
+    (progress) => {
+      setUploadingProgress(progress)
+    }
+  )
+
+  videoId = uploadedVideo.videoId
+}
 
       if (!videoId) {
         throw new Error('Please upload a video or enter a Video ID.')
@@ -227,15 +235,76 @@ export default function CreateLessonDialog({
               <input
                 type="file"
                 accept="video/*"
+                disabled={uploading}
                 onChange={(event) => {
                   const file = event.target.files?.[0] ?? null
                   setSelectedVideoFile(file)
                 }}
-                className="w-full rounded-lg border border-input bg-background px-3 py-2 outline-none transition focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+                className="w-full rounded-lg border border-input bg-background px-3 py-2 outline-none transition focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:opacity-50"
               />
               <p className="text-sm text-muted-foreground">
                 Upload a video here to create a Bunny Stream asset. Leave it blank to use a manual Video ID.
+                Supports files up to 5GB+ with resumable upload.
               </p>
+
+              {selectedVideoFile && (
+                <div className="rounded-lg border border-border bg-muted/30 p-3">
+                  <p className="text-sm font-medium text-foreground">
+                    {selectedVideoFile.name}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {(selectedVideoFile.size / (1024 * 1024 * 1024)).toFixed(2)} GB
+                  </p>
+                </div>
+              )}
+
+              {uploading && (
+                <div className="space-y-2 rounded-lg border border-border bg-muted/30 p-3">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-medium text-foreground">
+                      Uploading: {Math.round(progress)}%
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {Math.round(progress)}% complete
+                    </p>
+                  </div>
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                    <div
+                      className="h-full bg-green-500 transition-all duration-300"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      onClick={pauseUpload}
+                      className="flex-1"
+                    >
+                      Pause
+                    </Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      onClick={resumeUpload}
+                      className="flex-1"
+                    >
+                      Resume
+                    </Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="destructive"
+                      onClick={cancelUpload}
+                      className="flex-1"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="space-y-2 sm:col-span-2">
@@ -326,12 +395,12 @@ export default function CreateLessonDialog({
               type="button"
               variant="outline"
               onClick={() => handleOpenChange(false)}
-              disabled={isSaving}
+              disabled={isSaving || uploading}
             >
               Cancel
             </Button>
             <Button type="submit" disabled={isSaving || uploading}>
-              {uploading ? 'Uploading video...' : isSaving ? 'Saving...' : 'Create Lesson'}
+              {uploading ? `Uploading video (${Math.round(progress)}%)...` : isSaving ? 'Saving...' : 'Create Lesson'}
             </Button>
           </DialogFooter>
         </form>

@@ -121,10 +121,20 @@ model Course {
   categoryId      String
   category        Category @relation(fields: [categoryId], references: [id])
 
+
+   isFeatured Boolean @default(false)
+  isPopular  Boolean @default(false)
+  isTrending Boolean @default(false)
+
+
   sections        Section[]
 
   reviews         Review[]
   certificates    Certificate[]
+
+  @@index([isPublished])
+  @@index([isFeatured])
+  @@index([isPopular])
 }
 
 //section 

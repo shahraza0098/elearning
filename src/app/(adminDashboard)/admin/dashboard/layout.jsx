@@ -84,7 +84,7 @@ export default function AdminDashboardLayout({ children }) {
             </div>
             {!isCollapsed && (
               <span className="font-semibold text-lg text-white">
-                GYM Admin
+                Gyani Admin
               </span>
             )}
           </div>
