@@ -2253,6 +2253,7 @@ export namespace Prisma {
     phone: string | null
     image: string | null
     role: $Enums.Role | null
+    onboardingComplete: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2266,6 +2267,7 @@ export namespace Prisma {
     phone: string | null
     image: string | null
     role: $Enums.Role | null
+    onboardingComplete: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2279,6 +2281,7 @@ export namespace Prisma {
     phone: number
     image: number
     role: number
+    onboardingComplete: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2294,6 +2297,7 @@ export namespace Prisma {
     phone?: true
     image?: true
     role?: true
+    onboardingComplete?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2307,6 +2311,7 @@ export namespace Prisma {
     phone?: true
     image?: true
     role?: true
+    onboardingComplete?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2320,6 +2325,7 @@ export namespace Prisma {
     phone?: true
     image?: true
     role?: true
+    onboardingComplete?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2406,6 +2412,7 @@ export namespace Prisma {
     phone: string
     image: string | null
     role: $Enums.Role
+    onboardingComplete: boolean
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -2436,6 +2443,7 @@ export namespace Prisma {
     phone?: boolean
     image?: boolean
     role?: boolean
+    onboardingComplete?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     lessonProgress?: boolean | User$lessonProgressArgs<ExtArgs>
@@ -2456,6 +2464,7 @@ export namespace Prisma {
     phone?: boolean
     image?: boolean
     role?: boolean
+    onboardingComplete?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2469,6 +2478,7 @@ export namespace Prisma {
     phone?: boolean
     image?: boolean
     role?: boolean
+    onboardingComplete?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2482,11 +2492,12 @@ export namespace Prisma {
     phone?: boolean
     image?: boolean
     role?: boolean
+    onboardingComplete?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clerkUserId" | "name" | "username" | "email" | "phone" | "image" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clerkUserId" | "name" | "username" | "email" | "phone" | "image" | "role" | "onboardingComplete" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lessonProgress?: boolean | User$lessonProgressArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
@@ -2518,6 +2529,7 @@ export namespace Prisma {
       phone: string
       image: string | null
       role: $Enums.Role
+      onboardingComplete: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -2957,6 +2969,7 @@ export namespace Prisma {
     readonly phone: FieldRef<"User", 'String'>
     readonly image: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
+    readonly onboardingComplete: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -4619,6 +4632,9 @@ export namespace Prisma {
     updatedAt: Date | null
     deletedAt: Date | null
     categoryId: string | null
+    isFeatured: boolean | null
+    isPopular: boolean | null
+    isTrending: boolean | null
   }
 
   export type CourseMaxAggregateOutputType = {
@@ -4636,6 +4652,9 @@ export namespace Prisma {
     updatedAt: Date | null
     deletedAt: Date | null
     categoryId: string | null
+    isFeatured: boolean | null
+    isPopular: boolean | null
+    isTrending: boolean | null
   }
 
   export type CourseCountAggregateOutputType = {
@@ -4653,6 +4672,9 @@ export namespace Prisma {
     updatedAt: number
     deletedAt: number
     categoryId: number
+    isFeatured: number
+    isPopular: number
+    isTrending: number
     _all: number
   }
 
@@ -4684,6 +4706,9 @@ export namespace Prisma {
     updatedAt?: true
     deletedAt?: true
     categoryId?: true
+    isFeatured?: true
+    isPopular?: true
+    isTrending?: true
   }
 
   export type CourseMaxAggregateInputType = {
@@ -4701,6 +4726,9 @@ export namespace Prisma {
     updatedAt?: true
     deletedAt?: true
     categoryId?: true
+    isFeatured?: true
+    isPopular?: true
+    isTrending?: true
   }
 
   export type CourseCountAggregateInputType = {
@@ -4718,6 +4746,9 @@ export namespace Prisma {
     updatedAt?: true
     deletedAt?: true
     categoryId?: true
+    isFeatured?: true
+    isPopular?: true
+    isTrending?: true
     _all?: true
   }
 
@@ -4822,6 +4853,9 @@ export namespace Prisma {
     updatedAt: Date
     deletedAt: Date | null
     categoryId: string
+    isFeatured: boolean
+    isPopular: boolean
+    isTrending: boolean
     _count: CourseCountAggregateOutputType | null
     _avg: CourseAvgAggregateOutputType | null
     _sum: CourseSumAggregateOutputType | null
@@ -4858,6 +4892,9 @@ export namespace Prisma {
     updatedAt?: boolean
     deletedAt?: boolean
     categoryId?: boolean
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     sections?: boolean | Course$sectionsArgs<ExtArgs>
     reviews?: boolean | Course$reviewsArgs<ExtArgs>
@@ -4880,6 +4917,9 @@ export namespace Prisma {
     updatedAt?: boolean
     deletedAt?: boolean
     categoryId?: boolean
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["course"]>
 
@@ -4898,6 +4938,9 @@ export namespace Prisma {
     updatedAt?: boolean
     deletedAt?: boolean
     categoryId?: boolean
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["course"]>
 
@@ -4916,9 +4959,12 @@ export namespace Prisma {
     updatedAt?: boolean
     deletedAt?: boolean
     categoryId?: boolean
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
   }
 
-  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "description" | "position" | "thumbnailUrl" | "price" | "isPublished" | "totalDuration" | "level" | "createdAt" | "updatedAt" | "deletedAt" | "categoryId", ExtArgs["result"]["course"]>
+  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "description" | "position" | "thumbnailUrl" | "price" | "isPublished" | "totalDuration" | "level" | "createdAt" | "updatedAt" | "deletedAt" | "categoryId" | "isFeatured" | "isPopular" | "isTrending", ExtArgs["result"]["course"]>
   export type CourseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     sections?: boolean | Course$sectionsArgs<ExtArgs>
@@ -4956,6 +5002,9 @@ export namespace Prisma {
       updatedAt: Date
       deletedAt: Date | null
       categoryId: string
+      isFeatured: boolean
+      isPopular: boolean
+      isTrending: boolean
     }, ExtArgs["result"]["course"]>
     composites: {}
   }
@@ -5397,6 +5446,9 @@ export namespace Prisma {
     readonly updatedAt: FieldRef<"Course", 'DateTime'>
     readonly deletedAt: FieldRef<"Course", 'DateTime'>
     readonly categoryId: FieldRef<"Course", 'String'>
+    readonly isFeatured: FieldRef<"Course", 'Boolean'>
+    readonly isPopular: FieldRef<"Course", 'Boolean'>
+    readonly isTrending: FieldRef<"Course", 'Boolean'>
   }
     
 
@@ -16245,6 +16297,7 @@ export namespace Prisma {
     phone: 'phone',
     image: 'image',
     role: 'role',
+    onboardingComplete: 'onboardingComplete',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -16277,7 +16330,10 @@ export namespace Prisma {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     deletedAt: 'deletedAt',
-    categoryId: 'categoryId'
+    categoryId: 'categoryId',
+    isFeatured: 'isFeatured',
+    isPopular: 'isPopular',
+    isTrending: 'isTrending'
   };
 
   export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
@@ -16470,6 +16526,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -16508,13 +16571,6 @@ export namespace Prisma {
    * Reference to a field of type 'Decimal[]'
    */
   export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -16617,6 +16673,7 @@ export namespace Prisma {
     phone?: StringFilter<"User"> | string
     image?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
+    onboardingComplete?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     lessonProgress?: LessonProgressListRelationFilter
@@ -16636,6 +16693,7 @@ export namespace Prisma {
     phone?: SortOrder
     image?: SortOrderInput | SortOrder
     role?: SortOrder
+    onboardingComplete?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     lessonProgress?: LessonProgressOrderByRelationAggregateInput
@@ -16658,6 +16716,7 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     image?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
+    onboardingComplete?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     lessonProgress?: LessonProgressListRelationFilter
@@ -16677,6 +16736,7 @@ export namespace Prisma {
     phone?: SortOrder
     image?: SortOrderInput | SortOrder
     role?: SortOrder
+    onboardingComplete?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -16696,6 +16756,7 @@ export namespace Prisma {
     phone?: StringWithAggregatesFilter<"User"> | string
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+    onboardingComplete?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -16773,6 +16834,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Course"> | Date | string
     deletedAt?: DateTimeNullableFilter<"Course"> | Date | string | null
     categoryId?: StringFilter<"Course"> | string
+    isFeatured?: BoolFilter<"Course"> | boolean
+    isPopular?: BoolFilter<"Course"> | boolean
+    isTrending?: BoolFilter<"Course"> | boolean
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     sections?: SectionListRelationFilter
     reviews?: ReviewListRelationFilter
@@ -16794,6 +16858,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
     categoryId?: SortOrder
+    isFeatured?: SortOrder
+    isPopular?: SortOrder
+    isTrending?: SortOrder
     category?: CategoryOrderByWithRelationInput
     sections?: SectionOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
@@ -16818,6 +16885,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Course"> | Date | string
     deletedAt?: DateTimeNullableFilter<"Course"> | Date | string | null
     categoryId?: StringFilter<"Course"> | string
+    isFeatured?: BoolFilter<"Course"> | boolean
+    isPopular?: BoolFilter<"Course"> | boolean
+    isTrending?: BoolFilter<"Course"> | boolean
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     sections?: SectionListRelationFilter
     reviews?: ReviewListRelationFilter
@@ -16839,6 +16909,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
     categoryId?: SortOrder
+    isFeatured?: SortOrder
+    isPopular?: SortOrder
+    isTrending?: SortOrder
     _count?: CourseCountOrderByAggregateInput
     _avg?: CourseAvgOrderByAggregateInput
     _max?: CourseMaxOrderByAggregateInput
@@ -16864,6 +16937,9 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Course"> | Date | string
     deletedAt?: DateTimeNullableWithAggregatesFilter<"Course"> | Date | string | null
     categoryId?: StringWithAggregatesFilter<"Course"> | string
+    isFeatured?: BoolWithAggregatesFilter<"Course"> | boolean
+    isPopular?: BoolWithAggregatesFilter<"Course"> | boolean
+    isTrending?: BoolWithAggregatesFilter<"Course"> | boolean
   }
 
   export type SectionWhereInput = {
@@ -17558,6 +17634,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     lessonProgress?: LessonProgressCreateNestedManyWithoutUserInput
@@ -17577,6 +17654,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     lessonProgress?: LessonProgressUncheckedCreateNestedManyWithoutUserInput
@@ -17596,6 +17674,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lessonProgress?: LessonProgressUpdateManyWithoutUserNestedInput
@@ -17615,6 +17694,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lessonProgress?: LessonProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -17634,6 +17714,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17647,6 +17728,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17660,6 +17742,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17738,6 +17821,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
     category: CategoryCreateNestedOneWithoutCoursesInput
     sections?: SectionCreateNestedManyWithoutCourseInput
     reviews?: ReviewCreateNestedManyWithoutCourseInput
@@ -17759,6 +17845,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     categoryId: string
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
     sections?: SectionUncheckedCreateNestedManyWithoutCourseInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutCourseInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
@@ -17778,6 +17867,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    isPopular?: BoolFieldUpdateOperationsInput | boolean
+    isTrending?: BoolFieldUpdateOperationsInput | boolean
     category?: CategoryUpdateOneRequiredWithoutCoursesNestedInput
     sections?: SectionUpdateManyWithoutCourseNestedInput
     reviews?: ReviewUpdateManyWithoutCourseNestedInput
@@ -17799,6 +17891,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoryId?: StringFieldUpdateOperationsInput | string
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    isPopular?: BoolFieldUpdateOperationsInput | boolean
+    isTrending?: BoolFieldUpdateOperationsInput | boolean
     sections?: SectionUncheckedUpdateManyWithoutCourseNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutCourseNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
@@ -17819,6 +17914,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     categoryId: string
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
   }
 
   export type CourseUpdateManyMutationInput = {
@@ -17835,6 +17933,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    isPopular?: BoolFieldUpdateOperationsInput | boolean
+    isTrending?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CourseUncheckedUpdateManyInput = {
@@ -17852,6 +17953,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoryId?: StringFieldUpdateOperationsInput | string
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    isPopular?: BoolFieldUpdateOperationsInput | boolean
+    isTrending?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type SectionCreateInput = {
@@ -18608,6 +18712,11 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -18688,6 +18797,7 @@ export namespace Prisma {
     phone?: SortOrder
     image?: SortOrder
     role?: SortOrder
+    onboardingComplete?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18701,6 +18811,7 @@ export namespace Prisma {
     phone?: SortOrder
     image?: SortOrder
     role?: SortOrder
+    onboardingComplete?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18714,6 +18825,7 @@ export namespace Prisma {
     phone?: SortOrder
     image?: SortOrder
     role?: SortOrder
+    onboardingComplete?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18762,6 +18874,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleFilter<$PrismaModel>
     _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -18840,11 +18960,6 @@ export namespace Prisma {
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -18904,6 +19019,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     deletedAt?: SortOrder
     categoryId?: SortOrder
+    isFeatured?: SortOrder
+    isPopular?: SortOrder
+    isTrending?: SortOrder
   }
 
   export type CourseAvgOrderByAggregateInput = {
@@ -18927,6 +19045,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     deletedAt?: SortOrder
     categoryId?: SortOrder
+    isFeatured?: SortOrder
+    isPopular?: SortOrder
+    isTrending?: SortOrder
   }
 
   export type CourseMinOrderByAggregateInput = {
@@ -18944,6 +19065,9 @@ export namespace Prisma {
     updatedAt?: SortOrder
     deletedAt?: SortOrder
     categoryId?: SortOrder
+    isFeatured?: SortOrder
+    isPopular?: SortOrder
+    isTrending?: SortOrder
   }
 
   export type CourseSumOrderByAggregateInput = {
@@ -18982,14 +19106,6 @@ export namespace Prisma {
     _sum?: NestedDecimalFilter<$PrismaModel>
     _min?: NestedDecimalFilter<$PrismaModel>
     _max?: NestedDecimalFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -19609,6 +19725,10 @@ export namespace Prisma {
     set?: $Enums.Role
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -19886,10 +20006,6 @@ export namespace Prisma {
     decrement?: Decimal | DecimalJsLike | number | string
     multiply?: Decimal | DecimalJsLike | number | string
     divide?: Decimal | DecimalJsLike | number | string
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -20403,6 +20519,11 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -20480,6 +20601,14 @@ export namespace Prisma {
     _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -20503,11 +20632,6 @@ export namespace Prisma {
     gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedEnumCourseLevelFilter<$PrismaModel = never> = {
@@ -20569,14 +20693,6 @@ export namespace Prisma {
     _sum?: NestedDecimalFilter<$PrismaModel>
     _min?: NestedDecimalFilter<$PrismaModel>
     _max?: NestedDecimalFilter<$PrismaModel>
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -21081,6 +21197,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
     sections?: SectionCreateNestedManyWithoutCourseInput
     reviews?: ReviewCreateNestedManyWithoutCourseInput
     certificates?: CertificateCreateNestedManyWithoutCourseInput
@@ -21100,6 +21219,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
     sections?: SectionUncheckedCreateNestedManyWithoutCourseInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutCourseInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
@@ -21149,6 +21271,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Course"> | Date | string
     deletedAt?: DateTimeNullableFilter<"Course"> | Date | string | null
     categoryId?: StringFilter<"Course"> | string
+    isFeatured?: BoolFilter<"Course"> | boolean
+    isPopular?: BoolFilter<"Course"> | boolean
+    isTrending?: BoolFilter<"Course"> | boolean
   }
 
   export type CategoryCreateWithoutCoursesInput = {
@@ -21349,6 +21474,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
     category: CategoryCreateNestedOneWithoutCoursesInput
     reviews?: ReviewCreateNestedManyWithoutCourseInput
     certificates?: CertificateCreateNestedManyWithoutCourseInput
@@ -21369,6 +21497,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     categoryId: string
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
     reviews?: ReviewUncheckedCreateNestedManyWithoutCourseInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
   }
@@ -21439,6 +21570,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    isPopular?: BoolFieldUpdateOperationsInput | boolean
+    isTrending?: BoolFieldUpdateOperationsInput | boolean
     category?: CategoryUpdateOneRequiredWithoutCoursesNestedInput
     reviews?: ReviewUpdateManyWithoutCourseNestedInput
     certificates?: CertificateUpdateManyWithoutCourseNestedInput
@@ -21459,6 +21593,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoryId?: StringFieldUpdateOperationsInput | string
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    isPopular?: BoolFieldUpdateOperationsInput | boolean
+    isTrending?: BoolFieldUpdateOperationsInput | boolean
     reviews?: ReviewUncheckedUpdateManyWithoutCourseNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
   }
@@ -21590,6 +21727,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     payments?: PaymentCreateNestedManyWithoutUserInput
@@ -21608,6 +21746,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
@@ -21673,6 +21812,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     payments?: PaymentUpdateManyWithoutUserNestedInput
@@ -21691,6 +21831,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -21746,6 +21887,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     lessonProgress?: LessonProgressCreateNestedManyWithoutUserInput
@@ -21764,6 +21906,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     lessonProgress?: LessonProgressUncheckedCreateNestedManyWithoutUserInput
@@ -21792,6 +21935,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
     category: CategoryCreateNestedOneWithoutCoursesInput
     sections?: SectionCreateNestedManyWithoutCourseInput
     certificates?: CertificateCreateNestedManyWithoutCourseInput
@@ -21812,6 +21958,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     categoryId: string
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
     sections?: SectionUncheckedCreateNestedManyWithoutCourseInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
   }
@@ -21841,6 +21990,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lessonProgress?: LessonProgressUpdateManyWithoutUserNestedInput
@@ -21859,6 +22009,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lessonProgress?: LessonProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -21893,6 +22044,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    isPopular?: BoolFieldUpdateOperationsInput | boolean
+    isTrending?: BoolFieldUpdateOperationsInput | boolean
     category?: CategoryUpdateOneRequiredWithoutCoursesNestedInput
     sections?: SectionUpdateManyWithoutCourseNestedInput
     certificates?: CertificateUpdateManyWithoutCourseNestedInput
@@ -21913,6 +22067,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoryId?: StringFieldUpdateOperationsInput | string
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    isPopular?: BoolFieldUpdateOperationsInput | boolean
+    isTrending?: BoolFieldUpdateOperationsInput | boolean
     sections?: SectionUncheckedUpdateManyWithoutCourseNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
   }
@@ -21926,6 +22083,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     lessonProgress?: LessonProgressCreateNestedManyWithoutUserInput
@@ -21944,6 +22102,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     lessonProgress?: LessonProgressUncheckedCreateNestedManyWithoutUserInput
@@ -21972,6 +22131,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
     category: CategoryCreateNestedOneWithoutCoursesInput
     sections?: SectionCreateNestedManyWithoutCourseInput
     reviews?: ReviewCreateNestedManyWithoutCourseInput
@@ -21992,6 +22154,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     categoryId: string
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
     sections?: SectionUncheckedCreateNestedManyWithoutCourseInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutCourseInput
   }
@@ -22021,6 +22186,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lessonProgress?: LessonProgressUpdateManyWithoutUserNestedInput
@@ -22039,6 +22205,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lessonProgress?: LessonProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -22073,6 +22240,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    isPopular?: BoolFieldUpdateOperationsInput | boolean
+    isTrending?: BoolFieldUpdateOperationsInput | boolean
     category?: CategoryUpdateOneRequiredWithoutCoursesNestedInput
     sections?: SectionUpdateManyWithoutCourseNestedInput
     reviews?: ReviewUpdateManyWithoutCourseNestedInput
@@ -22093,6 +22263,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoryId?: StringFieldUpdateOperationsInput | string
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    isPopular?: BoolFieldUpdateOperationsInput | boolean
+    isTrending?: BoolFieldUpdateOperationsInput | boolean
     sections?: SectionUncheckedUpdateManyWithoutCourseNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutCourseNestedInput
   }
@@ -22106,6 +22279,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     lessonProgress?: LessonProgressCreateNestedManyWithoutUserInput
@@ -22124,6 +22298,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     lessonProgress?: LessonProgressUncheckedCreateNestedManyWithoutUserInput
@@ -22158,6 +22333,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lessonProgress?: LessonProgressUpdateManyWithoutUserNestedInput
@@ -22176,6 +22352,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lessonProgress?: LessonProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -22265,6 +22442,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     lessonProgress?: LessonProgressCreateNestedManyWithoutUserInput
@@ -22283,6 +22461,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     lessonProgress?: LessonProgressUncheckedCreateNestedManyWithoutUserInput
@@ -22390,6 +22569,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lessonProgress?: LessonProgressUpdateManyWithoutUserNestedInput
@@ -22408,6 +22588,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lessonProgress?: LessonProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -22481,6 +22662,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     lessonProgress?: LessonProgressCreateNestedManyWithoutUserInput
@@ -22499,6 +22681,7 @@ export namespace Prisma {
     phone: string
     image?: string | null
     role?: $Enums.Role
+    onboardingComplete?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     lessonProgress?: LessonProgressUncheckedCreateNestedManyWithoutUserInput
@@ -22566,6 +22749,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lessonProgress?: LessonProgressUpdateManyWithoutUserNestedInput
@@ -22584,6 +22768,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    onboardingComplete?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lessonProgress?: LessonProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -22842,6 +23027,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    isFeatured?: boolean
+    isPopular?: boolean
+    isTrending?: boolean
   }
 
   export type CourseUpdateWithoutCategoryInput = {
@@ -22858,6 +23046,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    isPopular?: BoolFieldUpdateOperationsInput | boolean
+    isTrending?: BoolFieldUpdateOperationsInput | boolean
     sections?: SectionUpdateManyWithoutCourseNestedInput
     reviews?: ReviewUpdateManyWithoutCourseNestedInput
     certificates?: CertificateUpdateManyWithoutCourseNestedInput
@@ -22877,6 +23068,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    isPopular?: BoolFieldUpdateOperationsInput | boolean
+    isTrending?: BoolFieldUpdateOperationsInput | boolean
     sections?: SectionUncheckedUpdateManyWithoutCourseNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutCourseNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
@@ -22896,6 +23090,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
+    isPopular?: BoolFieldUpdateOperationsInput | boolean
+    isTrending?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type SectionCreateManyCourseInput = {

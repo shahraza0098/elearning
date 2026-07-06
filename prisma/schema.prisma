@@ -70,7 +70,7 @@ model User {
   phone           String   @unique
   image           String?
   role            Role     @default(STUDENT)
-  
+  onboardingComplete Boolean @default(false)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 

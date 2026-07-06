@@ -59,17 +59,17 @@ enum CourseLevel {
 }
 
 model User {
-  id          String  @id @default(cuid())
-  clerkUserId String  @unique
-  name        String
-  username    String  @unique
-  email       String  @unique
-  phone       String  @unique
-  image       String?
-  role        Role    @default(STUDENT)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                 String   @id @default(cuid())
+  clerkUserId        String   @unique
+  name               String
+  username           String   @unique
+  email              String   @unique
+  phone              String   @unique
+  image              String?
+  role               Role     @default(STUDENT)
+  onboardingComplete Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
   lessonProgress LessonProgress[]
   payments       Payment[]
@@ -117,10 +117,18 @@ model Course {
   categoryId    String
   category      Category    @relation(fields: [categoryId], references: [id])
 
+  isFeatured Boolean @default(false)
+  isPopular  Boolean @default(false)
+  isTrending Boolean @default(false)
+
   sections Section[]
 
   reviews      Review[]
   certificates Certificate[]
+
+  @@index([isPublished])
+  @@index([isFeatured])
+  @@index([isPopular])
 }
 
 //section 

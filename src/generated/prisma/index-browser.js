@@ -129,6 +129,7 @@ exports.Prisma.UserScalarFieldEnum = {
   phone: 'phone',
   image: 'image',
   role: 'role',
+  onboardingComplete: 'onboardingComplete',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -155,7 +156,10 @@ exports.Prisma.CourseScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt',
-  categoryId: 'categoryId'
+  categoryId: 'categoryId',
+  isFeatured: 'isFeatured',
+  isPopular: 'isPopular',
+  isTrending: 'isTrending'
 };
 
 exports.Prisma.SectionScalarFieldEnum = {
