@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import prisma from "@/lib/prisma";
 import { requireStudent } from "@/lib/require-student";
-import { getSignedStreamUrl } from "@/lib/bunny";
+import { getPublicStreamUrl, getSignedStreamUrl } from "@/lib/bunny";
 
 function flattenLessons(sections) {
   return sections.flatMap((section) =>
@@ -20,13 +20,14 @@ export async function GET(request, { params }) {
   if (authResult.error) {
     return authResult.error;
   }
+  const {lessonId} = await params;
 
   const { user } = authResult;
 
   try {
     const lesson = await prisma.lesson.findFirst({
       where: {
-        id: params.lessonId,
+        id: lessonId,
 
         section: {
           course: {
@@ -123,9 +124,10 @@ export async function GET(request, { params }) {
         },
       });
 
-    const streamUrl = getSignedStreamUrl(
-      lesson.videoId
-    );
+    // const streamUrl = getSignedStreamUrl(
+    //   lesson.videoId
+    // );
+    const streamUrl =getPublicStreamUrl(lesson.videoId);
         return NextResponse.json(
       {
         message: "Lesson fetched successfully",

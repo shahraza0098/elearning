@@ -8,12 +8,13 @@ export async function GET(request, { params }) {
 
   if (authResult.error) return authResult.error;
 
+  const {id} = await params;
   const { user } = authResult;
 
   try {
     const course = await prisma.course.findFirst({
       where: {
-        id: params.id,
+        id: id,
         deletedAt: null,
         isPublished: true,
       },
