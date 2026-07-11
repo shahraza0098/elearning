@@ -22,7 +22,7 @@ export default function ClerkLayout({ children }) {
           {/* Brand/Logo Area */}
           <div className="mb-6 text-center">
             <h1 className="text-3xl font-extrabold text-[#3545cc]">
-              ApnaGymSoftware
+              Gyan Master
             </h1>
             <p className="text-sm text-gray-500 mt-1">
               Sign in or create your account
@@ -55,7 +55,7 @@ export default function ClerkLayout({ children }) {
 
       {/* Footer Copyright */}
       <div className="absolute bottom-4 sm:bottom-6 text-xs text-white/80 text-center w-full px-4 z-10">
-        © 2025-2026 ApnaGymSoftware, Inc. All Rights Reserved.{" "}
+        © 2025-2026 Gyan Master, Inc. All Rights Reserved.{" "}
         <a href="#" className="underline hover:text-white transition-colors">
           Privacy Policy
         </a>
