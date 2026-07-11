@@ -36,6 +36,7 @@ export async function POST(request) {
     const role = 'STUDENT'
     const username = body?.username?.toString().trim() || sessionClaims?.username?.toString().trim() || undefined
 
+    console.log('Onboarding request body:', body)
     if (!email) {
       return NextResponse.json({ message: 'Email is required' }, { status: 400 })
     }
