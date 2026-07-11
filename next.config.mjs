@@ -13,7 +13,7 @@ const nextConfig = {
       },
     ],
   },
-  allowedDevOrigins: ['172.19.218.5','172.19.218.6', 'http://172.23.160.1:3000' , 'http://10.185.136.5','https://www.gyanmaster.com/'],
+  allowedDevOrigins: ['172.27.144.1','10.93.243.5','172.20.10.3','https://www.gyanmaster.com/'],
 };
 
 export default nextConfig;
