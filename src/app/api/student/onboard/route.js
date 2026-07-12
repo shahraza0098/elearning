@@ -119,11 +119,11 @@ export async function POST(request) {
     const body = await request.json();
     console.log("Onboarding request body:", body);
 
-    const name = body?.name?.toString().trim() || sessionClaims?.fullName?.toString().trim() || 'Student'
-    const email = body?.email?.toString().trim() || sessionClaims?.email?.toString().trim() || ''
+    const name = body?.name?.toString().trim()  || 'Student'
+    const email = body?.email?.toString().trim() || ''
     const phone = body?.phone?.toString().trim() || ''
     const role = 'STUDENT'
-    const username = body?.username?.toString().trim() || sessionClaims?.username?.toString().trim() || undefined
+    const username = body?.username?.toString().trim() || undefined
 
     if (!email) {
       return NextResponse.json(
