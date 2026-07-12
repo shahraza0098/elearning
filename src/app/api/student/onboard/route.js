@@ -118,7 +118,7 @@ export async function POST(request) {
 
     const body = await request.json();
     console.log("Onboarding request body:", body);
-   console.log("Session claims:", sessionClaims);
+  //  console.log("Session claims:", sessionClaims);
     const name = body?.name?.toString().trim()  || 'Student'
     const email = body?.email?.toString().trim() ||  ''
     const phone = body?.phone?.toString().trim() || ''
