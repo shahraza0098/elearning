@@ -86,13 +86,14 @@ export async function verifyStudentToken(req) {
 
   const token = authHeader.slice("Bearer ".length).trim();
   if (!token) throw unauthorized();
-
+  console.log("Received token:", token);
   try {
     const payload = await verifyToken(token, {
       secretKey: process.env.CLERK_SECRET_KEY,
       clockSkewInMs: 60 * 1000,
     });
 
+    console.log("Token payload:", payload);
     const clerkUserId = payload?.sub;
     if (!clerkUserId) throw unauthorized("Invalid token");
 
