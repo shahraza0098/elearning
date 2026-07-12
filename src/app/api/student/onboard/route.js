@@ -112,7 +112,7 @@ import { verifyStudentToken } from "@/lib/verify-student-token";
 export async function POST(request) {
   try {
     // Verify Expo Bearer token
-    const { clerkUserId } = await verifyStudentToken(request);
+    // const { clerkUserId } = await verifyStudentToken(request);
       const { userId: sessionUserId, sessionClaims } = await auth()
       let userId = sessionUserId
 
