@@ -104,7 +104,7 @@
 
 
 import { NextResponse } from "next/server";
-import { clerkClient } from "@clerk/nextjs/server";
+import { clerkClient, auth } from "@clerk/nextjs/server";
 
 import prisma from "@/lib/prisma";
 import { verifyStudentToken } from "@/lib/verify-student-token";
@@ -113,13 +113,17 @@ export async function POST(request) {
   try {
     // Verify Expo Bearer token
     const { clerkUserId } = await verifyStudentToken(request);
+      const { userId: sessionUserId, sessionClaims } = await auth()
+      let userId = sessionUserId
 
     const body = await request.json();
-
-    const name = body?.name?.trim() || "Student";
-    const email = body?.email?.trim() || "";
-    const phone = body?.phone?.trim() || "";
-    const username = body?.username?.trim();
+    console.log("Onboarding request body:", body);
+   
+    const name = body?.name?.toString().trim() || sessionClaims?.fullName?.toString().trim() || 'Student'
+    const email = body?.email?.toString().trim() || sessionClaims?.email?.toString().trim() || ''
+    const phone = body?.phone?.toString().trim() || ''
+    const role = 'STUDENT'
+    const username = body?.username?.toString().trim() || sessionClaims?.username?.toString().trim() || undefined
 
     if (!email) {
       return NextResponse.json(
