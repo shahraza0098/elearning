@@ -107,7 +107,7 @@ import { NextResponse } from "next/server";
 import { clerkClient } from "@clerk/nextjs/server";
 
 import prisma from "@/lib/prisma";
-import { verifyStudentToken } from "@/lib/auth";
+import { verifyStudentToken } from "@/lib/verify-student-token";
 
 export async function POST(request) {
   try {
