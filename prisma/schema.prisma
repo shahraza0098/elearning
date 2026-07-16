@@ -22,21 +22,13 @@ enum BillingInterval {
 }
 //Subscription Status
 enum SubscriptionStatus {
- 
 CREATED
-
 AUTHENTICATED
-
 ACTIVE
-
 PAUSED
-
 HALTED
-
 CANCELLED
-
 COMPLETED
-
 EXPIRED
 }
 //Payment Status

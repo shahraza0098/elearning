@@ -145,26 +145,11 @@ export async function GET(request) {
       categories,
       recentProgress,
     ] = await Promise.all([
-      getCourseCollection(
-        {
-          isFeatured: true,
-        },
-        user.id
-      ),
+      getCourseCollection({isFeatured: true,}, user.id ),
 
-      getCourseCollection(
-        {
-          isPopular: true,
-        },
-        user.id
-      ),
+      getCourseCollection({isPopular: true,}, user.id),
 
-      getCourseCollection(
-        {
-          isTrending: true,
-        },
-        user.id
-      ),
+      getCourseCollection( {isTrending: true,},user.id),
 
       prisma.category.findMany({
         orderBy: {

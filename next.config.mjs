@@ -23,7 +23,8 @@ const nextConfig = {
     'https://gyanmaster.com',
     'https://api.clerk.com',
     'https://clerk.gyanmaster.com',
-    'https://clerk.gyanmaster.com/.well-known/jwks.json'
+    'https://clerk.gyanmaster.com/.well-known/jwks.json',
+    'captivate-ransack-subsector.ngrok-free.dev'
   ],
 };
 

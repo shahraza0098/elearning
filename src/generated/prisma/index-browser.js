@@ -244,6 +244,10 @@ exports.Prisma.SubscriptionScalarFieldEnum = {
   currentPeriodEnd: 'currentPeriodEnd',
   nextChargeAt: 'nextChargeAt',
   cancelledAt: 'cancelledAt',
+  trialStartAt: 'trialStartAt',
+  trialEndAt: 'trialEndAt',
+  razorpayCustomerId: 'razorpayCustomerId',
+  expiresAt: 'expiresAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -252,6 +256,7 @@ exports.Prisma.PaymentScalarFieldEnum = {
   id: 'id',
   amount: 'amount',
   status: 'status',
+  paymentType: 'paymentType',
   razorpayPaymentId: 'razorpayPaymentId',
   razorpayOrderId: 'razorpayOrderId',
   razorpayInvoiceId: 'razorpayInvoiceId',
@@ -305,7 +310,9 @@ exports.SubscriptionStatus = exports.$Enums.SubscriptionStatus = {
   AUTHENTICATED: 'AUTHENTICATED',
   ACTIVE: 'ACTIVE',
   PAUSED: 'PAUSED',
+  HALTED: 'HALTED',
   CANCELLED: 'CANCELLED',
+  COMPLETED: 'COMPLETED',
   EXPIRED: 'EXPIRED'
 };
 
@@ -314,6 +321,13 @@ exports.PaymentStatus = exports.$Enums.PaymentStatus = {
   SUCCESS: 'SUCCESS',
   FAILED: 'FAILED',
   REFUNDED: 'REFUNDED'
+};
+
+exports.PaymentType = exports.$Enums.PaymentType = {
+  TRIAL: 'TRIAL',
+  RECURRING: 'RECURRING',
+  MANUAL: 'MANUAL',
+  REFUND: 'REFUND'
 };
 
 exports.Prisma.ModelName = {

@@ -91,7 +91,9 @@ export const SubscriptionStatus: {
   AUTHENTICATED: 'AUTHENTICATED',
   ACTIVE: 'ACTIVE',
   PAUSED: 'PAUSED',
+  HALTED: 'HALTED',
   CANCELLED: 'CANCELLED',
+  COMPLETED: 'COMPLETED',
   EXPIRED: 'EXPIRED'
 };
 
@@ -106,6 +108,16 @@ export const PaymentStatus: {
 };
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const PaymentType: {
+  TRIAL: 'TRIAL',
+  RECURRING: 'RECURRING',
+  MANUAL: 'MANUAL',
+  REFUND: 'REFUND'
+};
+
+export type PaymentType = (typeof PaymentType)[keyof typeof PaymentType]
 
 
 export const Role: {
@@ -154,6 +166,10 @@ export const SubscriptionStatus: typeof $Enums.SubscriptionStatus
 export type PaymentStatus = $Enums.PaymentStatus
 
 export const PaymentStatus: typeof $Enums.PaymentStatus
+
+export type PaymentType = $Enums.PaymentType
+
+export const PaymentType: typeof $Enums.PaymentType
 
 export type Role = $Enums.Role
 
@@ -13887,6 +13903,10 @@ export namespace Prisma {
     currentPeriodEnd: Date | null
     nextChargeAt: Date | null
     cancelledAt: Date | null
+    trialStartAt: Date | null
+    trialEndAt: Date | null
+    razorpayCustomerId: string | null
+    expiresAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -13901,6 +13921,10 @@ export namespace Prisma {
     currentPeriodEnd: Date | null
     nextChargeAt: Date | null
     cancelledAt: Date | null
+    trialStartAt: Date | null
+    trialEndAt: Date | null
+    razorpayCustomerId: string | null
+    expiresAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -13915,6 +13939,10 @@ export namespace Prisma {
     currentPeriodEnd: number
     nextChargeAt: number
     cancelledAt: number
+    trialStartAt: number
+    trialEndAt: number
+    razorpayCustomerId: number
+    expiresAt: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -13931,6 +13959,10 @@ export namespace Prisma {
     currentPeriodEnd?: true
     nextChargeAt?: true
     cancelledAt?: true
+    trialStartAt?: true
+    trialEndAt?: true
+    razorpayCustomerId?: true
+    expiresAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -13945,6 +13977,10 @@ export namespace Prisma {
     currentPeriodEnd?: true
     nextChargeAt?: true
     cancelledAt?: true
+    trialStartAt?: true
+    trialEndAt?: true
+    razorpayCustomerId?: true
+    expiresAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -13959,6 +13995,10 @@ export namespace Prisma {
     currentPeriodEnd?: true
     nextChargeAt?: true
     cancelledAt?: true
+    trialStartAt?: true
+    trialEndAt?: true
+    razorpayCustomerId?: true
+    expiresAt?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -14046,6 +14086,10 @@ export namespace Prisma {
     currentPeriodEnd: Date | null
     nextChargeAt: Date | null
     cancelledAt: Date | null
+    trialStartAt: Date | null
+    trialEndAt: Date | null
+    razorpayCustomerId: string | null
+    expiresAt: Date | null
     createdAt: Date
     updatedAt: Date
     _count: SubscriptionCountAggregateOutputType | null
@@ -14077,6 +14121,10 @@ export namespace Prisma {
     currentPeriodEnd?: boolean
     nextChargeAt?: boolean
     cancelledAt?: boolean
+    trialStartAt?: boolean
+    trialEndAt?: boolean
+    razorpayCustomerId?: boolean
+    expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -14095,6 +14143,10 @@ export namespace Prisma {
     currentPeriodEnd?: boolean
     nextChargeAt?: boolean
     cancelledAt?: boolean
+    trialStartAt?: boolean
+    trialEndAt?: boolean
+    razorpayCustomerId?: boolean
+    expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -14111,6 +14163,10 @@ export namespace Prisma {
     currentPeriodEnd?: boolean
     nextChargeAt?: boolean
     cancelledAt?: boolean
+    trialStartAt?: boolean
+    trialEndAt?: boolean
+    razorpayCustomerId?: boolean
+    expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -14127,11 +14183,15 @@ export namespace Prisma {
     currentPeriodEnd?: boolean
     nextChargeAt?: boolean
     cancelledAt?: boolean
+    trialStartAt?: boolean
+    trialEndAt?: boolean
+    razorpayCustomerId?: boolean
+    expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type SubscriptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "planId" | "razorpaySubscriptionId" | "status" | "currentPeriodStart" | "currentPeriodEnd" | "nextChargeAt" | "cancelledAt" | "createdAt" | "updatedAt", ExtArgs["result"]["subscription"]>
+  export type SubscriptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "planId" | "razorpaySubscriptionId" | "status" | "currentPeriodStart" | "currentPeriodEnd" | "nextChargeAt" | "cancelledAt" | "trialStartAt" | "trialEndAt" | "razorpayCustomerId" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["subscription"]>
   export type SubscriptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     plan?: boolean | PlanDefaultArgs<ExtArgs>
@@ -14164,6 +14224,10 @@ export namespace Prisma {
       currentPeriodEnd: Date | null
       nextChargeAt: Date | null
       cancelledAt: Date | null
+      trialStartAt: Date | null
+      trialEndAt: Date | null
+      razorpayCustomerId: string | null
+      expiresAt: Date | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["subscription"]>
@@ -14601,6 +14665,10 @@ export namespace Prisma {
     readonly currentPeriodEnd: FieldRef<"Subscription", 'DateTime'>
     readonly nextChargeAt: FieldRef<"Subscription", 'DateTime'>
     readonly cancelledAt: FieldRef<"Subscription", 'DateTime'>
+    readonly trialStartAt: FieldRef<"Subscription", 'DateTime'>
+    readonly trialEndAt: FieldRef<"Subscription", 'DateTime'>
+    readonly razorpayCustomerId: FieldRef<"Subscription", 'String'>
+    readonly expiresAt: FieldRef<"Subscription", 'DateTime'>
     readonly createdAt: FieldRef<"Subscription", 'DateTime'>
     readonly updatedAt: FieldRef<"Subscription", 'DateTime'>
   }
@@ -15070,6 +15138,7 @@ export namespace Prisma {
     id: string | null
     amount: Decimal | null
     status: $Enums.PaymentStatus | null
+    paymentType: $Enums.PaymentType | null
     razorpayPaymentId: string | null
     razorpayOrderId: string | null
     razorpayInvoiceId: string | null
@@ -15086,6 +15155,7 @@ export namespace Prisma {
     id: string | null
     amount: Decimal | null
     status: $Enums.PaymentStatus | null
+    paymentType: $Enums.PaymentType | null
     razorpayPaymentId: string | null
     razorpayOrderId: string | null
     razorpayInvoiceId: string | null
@@ -15102,6 +15172,7 @@ export namespace Prisma {
     id: number
     amount: number
     status: number
+    paymentType: number
     razorpayPaymentId: number
     razorpayOrderId: number
     razorpayInvoiceId: number
@@ -15128,6 +15199,7 @@ export namespace Prisma {
     id?: true
     amount?: true
     status?: true
+    paymentType?: true
     razorpayPaymentId?: true
     razorpayOrderId?: true
     razorpayInvoiceId?: true
@@ -15144,6 +15216,7 @@ export namespace Prisma {
     id?: true
     amount?: true
     status?: true
+    paymentType?: true
     razorpayPaymentId?: true
     razorpayOrderId?: true
     razorpayInvoiceId?: true
@@ -15160,6 +15233,7 @@ export namespace Prisma {
     id?: true
     amount?: true
     status?: true
+    paymentType?: true
     razorpayPaymentId?: true
     razorpayOrderId?: true
     razorpayInvoiceId?: true
@@ -15263,6 +15337,7 @@ export namespace Prisma {
     id: string
     amount: Decimal
     status: $Enums.PaymentStatus
+    paymentType: $Enums.PaymentType
     razorpayPaymentId: string | null
     razorpayOrderId: string | null
     razorpayInvoiceId: string | null
@@ -15298,6 +15373,7 @@ export namespace Prisma {
     id?: boolean
     amount?: boolean
     status?: boolean
+    paymentType?: boolean
     razorpayPaymentId?: boolean
     razorpayOrderId?: boolean
     razorpayInvoiceId?: boolean
@@ -15316,6 +15392,7 @@ export namespace Prisma {
     id?: boolean
     amount?: boolean
     status?: boolean
+    paymentType?: boolean
     razorpayPaymentId?: boolean
     razorpayOrderId?: boolean
     razorpayInvoiceId?: boolean
@@ -15334,6 +15411,7 @@ export namespace Prisma {
     id?: boolean
     amount?: boolean
     status?: boolean
+    paymentType?: boolean
     razorpayPaymentId?: boolean
     razorpayOrderId?: boolean
     razorpayInvoiceId?: boolean
@@ -15352,6 +15430,7 @@ export namespace Prisma {
     id?: boolean
     amount?: boolean
     status?: boolean
+    paymentType?: boolean
     razorpayPaymentId?: boolean
     razorpayOrderId?: boolean
     razorpayInvoiceId?: boolean
@@ -15364,7 +15443,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "status" | "razorpayPaymentId" | "razorpayOrderId" | "razorpayInvoiceId" | "razorpaySignature" | "failureReason" | "paidAt" | "userId" | "subscriptionId" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
+  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "status" | "paymentType" | "razorpayPaymentId" | "razorpayOrderId" | "razorpayInvoiceId" | "razorpaySignature" | "failureReason" | "paidAt" | "userId" | "subscriptionId" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
   export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     subscription?: boolean | Payment$subscriptionArgs<ExtArgs>
@@ -15388,6 +15467,7 @@ export namespace Prisma {
       id: string
       amount: Prisma.Decimal
       status: $Enums.PaymentStatus
+      paymentType: $Enums.PaymentType
       razorpayPaymentId: string | null
       razorpayOrderId: string | null
       razorpayInvoiceId: string | null
@@ -15826,6 +15906,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Payment", 'String'>
     readonly amount: FieldRef<"Payment", 'Decimal'>
     readonly status: FieldRef<"Payment", 'PaymentStatus'>
+    readonly paymentType: FieldRef<"Payment", 'PaymentType'>
     readonly razorpayPaymentId: FieldRef<"Payment", 'String'>
     readonly razorpayOrderId: FieldRef<"Payment", 'String'>
     readonly razorpayInvoiceId: FieldRef<"Payment", 'String'>
@@ -16442,6 +16523,10 @@ export namespace Prisma {
     currentPeriodEnd: 'currentPeriodEnd',
     nextChargeAt: 'nextChargeAt',
     cancelledAt: 'cancelledAt',
+    trialStartAt: 'trialStartAt',
+    trialEndAt: 'trialEndAt',
+    razorpayCustomerId: 'razorpayCustomerId',
+    expiresAt: 'expiresAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -16453,6 +16538,7 @@ export namespace Prisma {
     id: 'id',
     amount: 'amount',
     status: 'status',
+    paymentType: 'paymentType',
     razorpayPaymentId: 'razorpayPaymentId',
     razorpayOrderId: 'razorpayOrderId',
     razorpayInvoiceId: 'razorpayInvoiceId',
@@ -16641,6 +16727,20 @@ export namespace Prisma {
    * Reference to a field of type 'PaymentStatus[]'
    */
   export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaymentType'
+   */
+  export type EnumPaymentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentType'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaymentType[]'
+   */
+  export type ListEnumPaymentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentType[]'>
     
 
 
@@ -17447,6 +17547,10 @@ export namespace Prisma {
     currentPeriodEnd?: DateTimeNullableFilter<"Subscription"> | Date | string | null
     nextChargeAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
     cancelledAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
+    trialStartAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
+    trialEndAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
+    razorpayCustomerId?: StringNullableFilter<"Subscription"> | string | null
+    expiresAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
     createdAt?: DateTimeFilter<"Subscription"> | Date | string
     updatedAt?: DateTimeFilter<"Subscription"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -17464,6 +17568,10 @@ export namespace Prisma {
     currentPeriodEnd?: SortOrderInput | SortOrder
     nextChargeAt?: SortOrderInput | SortOrder
     cancelledAt?: SortOrderInput | SortOrder
+    trialStartAt?: SortOrderInput | SortOrder
+    trialEndAt?: SortOrderInput | SortOrder
+    razorpayCustomerId?: SortOrderInput | SortOrder
+    expiresAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -17484,6 +17592,10 @@ export namespace Prisma {
     currentPeriodEnd?: DateTimeNullableFilter<"Subscription"> | Date | string | null
     nextChargeAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
     cancelledAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
+    trialStartAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
+    trialEndAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
+    razorpayCustomerId?: StringNullableFilter<"Subscription"> | string | null
+    expiresAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
     createdAt?: DateTimeFilter<"Subscription"> | Date | string
     updatedAt?: DateTimeFilter<"Subscription"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -17501,6 +17613,10 @@ export namespace Prisma {
     currentPeriodEnd?: SortOrderInput | SortOrder
     nextChargeAt?: SortOrderInput | SortOrder
     cancelledAt?: SortOrderInput | SortOrder
+    trialStartAt?: SortOrderInput | SortOrder
+    trialEndAt?: SortOrderInput | SortOrder
+    razorpayCustomerId?: SortOrderInput | SortOrder
+    expiresAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: SubscriptionCountOrderByAggregateInput
@@ -17521,6 +17637,10 @@ export namespace Prisma {
     currentPeriodEnd?: DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
     nextChargeAt?: DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
     cancelledAt?: DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
+    trialStartAt?: DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
+    trialEndAt?: DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
+    razorpayCustomerId?: StringNullableWithAggregatesFilter<"Subscription"> | string | null
+    expiresAt?: DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Subscription"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Subscription"> | Date | string
   }
@@ -17532,6 +17652,7 @@ export namespace Prisma {
     id?: StringFilter<"Payment"> | string
     amount?: DecimalFilter<"Payment"> | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
+    paymentType?: EnumPaymentTypeFilter<"Payment"> | $Enums.PaymentType
     razorpayPaymentId?: StringNullableFilter<"Payment"> | string | null
     razorpayOrderId?: StringNullableFilter<"Payment"> | string | null
     razorpayInvoiceId?: StringNullableFilter<"Payment"> | string | null
@@ -17550,6 +17671,7 @@ export namespace Prisma {
     id?: SortOrder
     amount?: SortOrder
     status?: SortOrder
+    paymentType?: SortOrder
     razorpayPaymentId?: SortOrderInput | SortOrder
     razorpayOrderId?: SortOrderInput | SortOrder
     razorpayInvoiceId?: SortOrderInput | SortOrder
@@ -17572,6 +17694,7 @@ export namespace Prisma {
     NOT?: PaymentWhereInput | PaymentWhereInput[]
     amount?: DecimalFilter<"Payment"> | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
+    paymentType?: EnumPaymentTypeFilter<"Payment"> | $Enums.PaymentType
     razorpayOrderId?: StringNullableFilter<"Payment"> | string | null
     razorpayInvoiceId?: StringNullableFilter<"Payment"> | string | null
     razorpaySignature?: StringNullableFilter<"Payment"> | string | null
@@ -17589,6 +17712,7 @@ export namespace Prisma {
     id?: SortOrder
     amount?: SortOrder
     status?: SortOrder
+    paymentType?: SortOrder
     razorpayPaymentId?: SortOrderInput | SortOrder
     razorpayOrderId?: SortOrderInput | SortOrder
     razorpayInvoiceId?: SortOrderInput | SortOrder
@@ -17613,6 +17737,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Payment"> | string
     amount?: DecimalWithAggregatesFilter<"Payment"> | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusWithAggregatesFilter<"Payment"> | $Enums.PaymentStatus
+    paymentType?: EnumPaymentTypeWithAggregatesFilter<"Payment"> | $Enums.PaymentType
     razorpayPaymentId?: StringNullableWithAggregatesFilter<"Payment"> | string | null
     razorpayOrderId?: StringNullableWithAggregatesFilter<"Payment"> | string | null
     razorpayInvoiceId?: StringNullableWithAggregatesFilter<"Payment"> | string | null
@@ -18473,6 +18598,10 @@ export namespace Prisma {
     currentPeriodEnd?: Date | string | null
     nextChargeAt?: Date | string | null
     cancelledAt?: Date | string | null
+    trialStartAt?: Date | string | null
+    trialEndAt?: Date | string | null
+    razorpayCustomerId?: string | null
+    expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutSubscriptionInput
@@ -18490,6 +18619,10 @@ export namespace Prisma {
     currentPeriodEnd?: Date | string | null
     nextChargeAt?: Date | string | null
     cancelledAt?: Date | string | null
+    trialStartAt?: Date | string | null
+    trialEndAt?: Date | string | null
+    razorpayCustomerId?: string | null
+    expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     payments?: PaymentUncheckedCreateNestedManyWithoutSubscriptionInput
@@ -18503,6 +18636,10 @@ export namespace Prisma {
     currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextChargeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialStartAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialEndAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutSubscriptionNestedInput
@@ -18520,6 +18657,10 @@ export namespace Prisma {
     currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextChargeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialStartAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialEndAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     payments?: PaymentUncheckedUpdateManyWithoutSubscriptionNestedInput
@@ -18535,6 +18676,10 @@ export namespace Prisma {
     currentPeriodEnd?: Date | string | null
     nextChargeAt?: Date | string | null
     cancelledAt?: Date | string | null
+    trialStartAt?: Date | string | null
+    trialEndAt?: Date | string | null
+    razorpayCustomerId?: string | null
+    expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -18547,6 +18692,10 @@ export namespace Prisma {
     currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextChargeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialStartAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialEndAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18561,6 +18710,10 @@ export namespace Prisma {
     currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextChargeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialStartAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialEndAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18569,6 +18722,7 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status: $Enums.PaymentStatus
+    paymentType: $Enums.PaymentType
     razorpayPaymentId?: string | null
     razorpayOrderId?: string | null
     razorpayInvoiceId?: string | null
@@ -18585,6 +18739,7 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status: $Enums.PaymentStatus
+    paymentType: $Enums.PaymentType
     razorpayPaymentId?: string | null
     razorpayOrderId?: string | null
     razorpayInvoiceId?: string | null
@@ -18601,6 +18756,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paymentType?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayInvoiceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18617,6 +18773,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paymentType?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayInvoiceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18633,6 +18790,7 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status: $Enums.PaymentStatus
+    paymentType: $Enums.PaymentType
     razorpayPaymentId?: string | null
     razorpayOrderId?: string | null
     razorpayInvoiceId?: string | null
@@ -18649,6 +18807,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paymentType?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayInvoiceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18663,6 +18822,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paymentType?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayInvoiceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19516,6 +19676,10 @@ export namespace Prisma {
     currentPeriodEnd?: SortOrder
     nextChargeAt?: SortOrder
     cancelledAt?: SortOrder
+    trialStartAt?: SortOrder
+    trialEndAt?: SortOrder
+    razorpayCustomerId?: SortOrder
+    expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19530,6 +19694,10 @@ export namespace Prisma {
     currentPeriodEnd?: SortOrder
     nextChargeAt?: SortOrder
     cancelledAt?: SortOrder
+    trialStartAt?: SortOrder
+    trialEndAt?: SortOrder
+    razorpayCustomerId?: SortOrder
+    expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19544,6 +19712,10 @@ export namespace Prisma {
     currentPeriodEnd?: SortOrder
     nextChargeAt?: SortOrder
     cancelledAt?: SortOrder
+    trialStartAt?: SortOrder
+    trialEndAt?: SortOrder
+    razorpayCustomerId?: SortOrder
+    expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19565,10 +19737,18 @@ export namespace Prisma {
     not?: NestedEnumPaymentStatusFilter<$PrismaModel> | $Enums.PaymentStatus
   }
 
+  export type EnumPaymentTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentType | EnumPaymentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentType[] | ListEnumPaymentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentType[] | ListEnumPaymentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentTypeFilter<$PrismaModel> | $Enums.PaymentType
+  }
+
   export type PaymentCountOrderByAggregateInput = {
     id?: SortOrder
     amount?: SortOrder
     status?: SortOrder
+    paymentType?: SortOrder
     razorpayPaymentId?: SortOrder
     razorpayOrderId?: SortOrder
     razorpayInvoiceId?: SortOrder
@@ -19589,6 +19769,7 @@ export namespace Prisma {
     id?: SortOrder
     amount?: SortOrder
     status?: SortOrder
+    paymentType?: SortOrder
     razorpayPaymentId?: SortOrder
     razorpayOrderId?: SortOrder
     razorpayInvoiceId?: SortOrder
@@ -19605,6 +19786,7 @@ export namespace Prisma {
     id?: SortOrder
     amount?: SortOrder
     status?: SortOrder
+    paymentType?: SortOrder
     razorpayPaymentId?: SortOrder
     razorpayOrderId?: SortOrder
     razorpayInvoiceId?: SortOrder
@@ -19629,6 +19811,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPaymentStatusFilter<$PrismaModel>
     _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
+  }
+
+  export type EnumPaymentTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentType | EnumPaymentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentType[] | ListEnumPaymentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentType[] | ListEnumPaymentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentTypeWithAggregatesFilter<$PrismaModel> | $Enums.PaymentType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentTypeFilter<$PrismaModel>
+    _max?: NestedEnumPaymentTypeFilter<$PrismaModel>
   }
 
   export type LessonProgressCreateNestedManyWithoutUserInput = {
@@ -20466,6 +20658,10 @@ export namespace Prisma {
     set?: $Enums.PaymentStatus
   }
 
+  export type EnumPaymentTypeFieldUpdateOperationsInput = {
+    set?: $Enums.PaymentType
+  }
+
   export type UserUpdateOneRequiredWithoutPaymentsNestedInput = {
     create?: XOR<UserCreateWithoutPaymentsInput, UserUncheckedCreateWithoutPaymentsInput>
     connectOrCreate?: UserCreateOrConnectWithoutPaymentsInput
@@ -20804,6 +21000,13 @@ export namespace Prisma {
     not?: NestedEnumPaymentStatusFilter<$PrismaModel> | $Enums.PaymentStatus
   }
 
+  export type NestedEnumPaymentTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentType | EnumPaymentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentType[] | ListEnumPaymentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentType[] | ListEnumPaymentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentTypeFilter<$PrismaModel> | $Enums.PaymentType
+  }
+
   export type NestedEnumPaymentStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.PaymentStatus | EnumPaymentStatusFieldRefInput<$PrismaModel>
     in?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
@@ -20812,6 +21015,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPaymentStatusFilter<$PrismaModel>
     _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumPaymentTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentType | EnumPaymentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentType[] | ListEnumPaymentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentType[] | ListEnumPaymentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentTypeWithAggregatesFilter<$PrismaModel> | $Enums.PaymentType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentTypeFilter<$PrismaModel>
+    _max?: NestedEnumPaymentTypeFilter<$PrismaModel>
   }
 
   export type LessonProgressCreateWithoutUserInput = {
@@ -20844,6 +21057,7 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status: $Enums.PaymentStatus
+    paymentType: $Enums.PaymentType
     razorpayPaymentId?: string | null
     razorpayOrderId?: string | null
     razorpayInvoiceId?: string | null
@@ -20859,6 +21073,7 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status: $Enums.PaymentStatus
+    paymentType: $Enums.PaymentType
     razorpayPaymentId?: string | null
     razorpayOrderId?: string | null
     razorpayInvoiceId?: string | null
@@ -20970,6 +21185,10 @@ export namespace Prisma {
     currentPeriodEnd?: Date | string | null
     nextChargeAt?: Date | string | null
     cancelledAt?: Date | string | null
+    trialStartAt?: Date | string | null
+    trialEndAt?: Date | string | null
+    razorpayCustomerId?: string | null
+    expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     plan: PlanCreateNestedOneWithoutSubscriptionsInput
@@ -20985,6 +21204,10 @@ export namespace Prisma {
     currentPeriodEnd?: Date | string | null
     nextChargeAt?: Date | string | null
     cancelledAt?: Date | string | null
+    trialStartAt?: Date | string | null
+    trialEndAt?: Date | string | null
+    razorpayCustomerId?: string | null
+    expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     payments?: PaymentUncheckedCreateNestedManyWithoutSubscriptionInput
@@ -21046,6 +21269,7 @@ export namespace Prisma {
     id?: StringFilter<"Payment"> | string
     amount?: DecimalFilter<"Payment"> | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
+    paymentType?: EnumPaymentTypeFilter<"Payment"> | $Enums.PaymentType
     razorpayPaymentId?: StringNullableFilter<"Payment"> | string | null
     razorpayOrderId?: StringNullableFilter<"Payment"> | string | null
     razorpayInvoiceId?: StringNullableFilter<"Payment"> | string | null
@@ -21163,6 +21387,10 @@ export namespace Prisma {
     currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextChargeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialStartAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialEndAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     plan?: PlanUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -21178,6 +21406,10 @@ export namespace Prisma {
     currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextChargeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialStartAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialEndAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     payments?: PaymentUncheckedUpdateManyWithoutSubscriptionNestedInput
@@ -22370,6 +22602,10 @@ export namespace Prisma {
     currentPeriodEnd?: Date | string | null
     nextChargeAt?: Date | string | null
     cancelledAt?: Date | string | null
+    trialStartAt?: Date | string | null
+    trialEndAt?: Date | string | null
+    razorpayCustomerId?: string | null
+    expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutSubscriptionInput
@@ -22385,6 +22621,10 @@ export namespace Prisma {
     currentPeriodEnd?: Date | string | null
     nextChargeAt?: Date | string | null
     cancelledAt?: Date | string | null
+    trialStartAt?: Date | string | null
+    trialEndAt?: Date | string | null
+    razorpayCustomerId?: string | null
+    expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     payments?: PaymentUncheckedCreateNestedManyWithoutSubscriptionInput
@@ -22429,6 +22669,10 @@ export namespace Prisma {
     currentPeriodEnd?: DateTimeNullableFilter<"Subscription"> | Date | string | null
     nextChargeAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
     cancelledAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
+    trialStartAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
+    trialEndAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
+    razorpayCustomerId?: StringNullableFilter<"Subscription"> | string | null
+    expiresAt?: DateTimeNullableFilter<"Subscription"> | Date | string | null
     createdAt?: DateTimeFilter<"Subscription"> | Date | string
     updatedAt?: DateTimeFilter<"Subscription"> | Date | string
   }
@@ -22513,6 +22757,7 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status: $Enums.PaymentStatus
+    paymentType: $Enums.PaymentType
     razorpayPaymentId?: string | null
     razorpayOrderId?: string | null
     razorpayInvoiceId?: string | null
@@ -22528,6 +22773,7 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status: $Enums.PaymentStatus
+    paymentType: $Enums.PaymentType
     razorpayPaymentId?: string | null
     razorpayOrderId?: string | null
     razorpayInvoiceId?: string | null
@@ -22704,6 +22950,10 @@ export namespace Prisma {
     currentPeriodEnd?: Date | string | null
     nextChargeAt?: Date | string | null
     cancelledAt?: Date | string | null
+    trialStartAt?: Date | string | null
+    trialEndAt?: Date | string | null
+    razorpayCustomerId?: string | null
+    expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutSubscriptionInput
@@ -22720,6 +22970,10 @@ export namespace Prisma {
     currentPeriodEnd?: Date | string | null
     nextChargeAt?: Date | string | null
     cancelledAt?: Date | string | null
+    trialStartAt?: Date | string | null
+    trialEndAt?: Date | string | null
+    razorpayCustomerId?: string | null
+    expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -22797,6 +23051,10 @@ export namespace Prisma {
     currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextChargeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialStartAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialEndAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutSubscriptionNestedInput
@@ -22813,6 +23071,10 @@ export namespace Prisma {
     currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextChargeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialStartAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialEndAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -22829,6 +23091,7 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status: $Enums.PaymentStatus
+    paymentType: $Enums.PaymentType
     razorpayPaymentId?: string | null
     razorpayOrderId?: string | null
     razorpayInvoiceId?: string | null
@@ -22894,6 +23157,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paymentType?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayInvoiceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22909,6 +23173,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paymentType?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayInvoiceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22924,6 +23189,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paymentType?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayInvoiceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23280,6 +23546,10 @@ export namespace Prisma {
     currentPeriodEnd?: Date | string | null
     nextChargeAt?: Date | string | null
     cancelledAt?: Date | string | null
+    trialStartAt?: Date | string | null
+    trialEndAt?: Date | string | null
+    razorpayCustomerId?: string | null
+    expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23292,6 +23562,10 @@ export namespace Prisma {
     currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextChargeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialStartAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialEndAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutSubscriptionNestedInput
@@ -23307,6 +23581,10 @@ export namespace Prisma {
     currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextChargeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialStartAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialEndAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     payments?: PaymentUncheckedUpdateManyWithoutSubscriptionNestedInput
@@ -23321,6 +23599,10 @@ export namespace Prisma {
     currentPeriodEnd?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextChargeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialStartAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    trialEndAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    razorpayCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23329,6 +23611,7 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status: $Enums.PaymentStatus
+    paymentType: $Enums.PaymentType
     razorpayPaymentId?: string | null
     razorpayOrderId?: string | null
     razorpayInvoiceId?: string | null
@@ -23344,6 +23627,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paymentType?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayInvoiceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23359,6 +23643,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paymentType?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayInvoiceId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23374,6 +23659,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    paymentType?: EnumPaymentTypeFieldUpdateOperationsInput | $Enums.PaymentType
     razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
     razorpayInvoiceId?: NullableStringFieldUpdateOperationsInput | string | null
