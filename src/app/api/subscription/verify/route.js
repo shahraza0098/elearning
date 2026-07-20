@@ -38,10 +38,10 @@ export async function POST(req) {
     const subscription = await prisma.subscription.findUnique({
       where: { razorpaySubscriptionId: razorpay_subscription_id },
     });
-
+    
     return NextResponse.json({
       ok: true,
-      status: subscription?.status ?? "CREATED",
+      status: subscription?.status ,
     });
   } catch (error) {
     console.error("Verify subscription error:", error);

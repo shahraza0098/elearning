@@ -21,12 +21,9 @@ export async function POST(request) {
      */
     const existingSubscription =
       await prisma.subscription.findFirst({
-        where: {
-          userId: user.id,
-
+        where: {userId: user.id,
           status: {
             in: [
-              "CREATED",
               "AUTHENTICATED",
               "ACTIVE",
             ],
@@ -41,8 +38,8 @@ export async function POST(request) {
     if (existingSubscription) {
       return NextResponse.json(
         {
-          message:
-            "You already have a subscription.",
+          message: "You already have a subscription.",
+            status:existingSubscription.status,
         },
         {
           status: 409,
@@ -87,8 +84,7 @@ export async function POST(request) {
      * Create Razorpay Subscription
      */
 
-    const razorpaySubscription =
-      await razorpay.subscriptions.create({
+    const razorpaySubscription =await razorpay.subscriptions.create({
       plan_id: plan.razorpayPlanId,
     total_count: totalCount,
     customer_notify: 1,
