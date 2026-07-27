@@ -114,16 +114,32 @@ export async function POST(request) {
     // Verify Expo Bearer token
     const { clerkUserId } = await verifyStudentToken(request);
       const { userId: sessionUserId, sessionClaims } = await auth()
+      const client = await clerkClient();
       let userId = sessionUserId
 
+      const clerkUser = await client.users.getUser(clerkUserId);
+
+
+
+const email =clerkUser.emailAddresses.find(
+    e => e.id === clerkUser.primaryEmailAddressId
+  )?.emailAddress ?? "";
+
+
+
+      // console.log("clerk user ", clerkUser)
+
+      console.log("session claim", sessionClaims)
     const body = await request.json();
     console.log("Onboarding request body:", body);
 
     const name = body?.name?.toString().trim() || sessionClaims?.fullName?.toString().trim() || 'Student'
-    const email = body?.email?.toString().trim() || sessionClaims?.email?.toString().trim() || ''
+    // const email = sessionClaims?.email?.toString().trim() || ''
+    
+    console.log("Email:", email)
     const phone = body?.phone?.toString().trim() || ''
     const role = 'STUDENT'
-    const username = body?.username?.toString().trim() || sessionClaims?.username?.toString().trim() || undefined
+    const username =  sessionClaims?.username?.toString().trim() || undefined
 
     if (!email) {
       return NextResponse.json(
@@ -174,7 +190,7 @@ export async function POST(request) {
     }
 
     // Update Clerk metadata
-    const client = await clerkClient();
+    
 
     await client.users.updateUser(clerkUserId, {
       publicMetadata: {
