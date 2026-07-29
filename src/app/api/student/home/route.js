@@ -84,7 +84,7 @@ async function attachCourseProgress(courses, userId) {
 /**
  * Fetch course collection.
  */
-async function getCourseCollection(where, userId) {
+async function getCourseCollection(where, userId, take = 6) {
   const courses = await prisma.course.findMany({
     where: {
       deletedAt: null,
@@ -101,7 +101,7 @@ async function getCourseCollection(where, userId) {
       },
     ],
 
-    take: 6,
+    ...(take ? { take } : {}),
 
     include: {
       category: {
@@ -142,6 +142,7 @@ export async function GET(request) {
       featuredCourses,
       popularCourses,
       trendingCourses,
+      allCourses,
       categories,
       recentProgress,
     ] = await Promise.all([
@@ -150,6 +151,8 @@ export async function GET(request) {
       getCourseCollection({isPopular: true,}, user.id),
 
       getCourseCollection( {isTrending: true,},user.id),
+
+      getCourseCollection({}, user.id, null),
 
       prisma.category.findMany({
         orderBy: {
@@ -270,6 +273,8 @@ export async function GET(request) {
           popularCourses,
 
           trendingCourses,
+
+          allCourses,
         },
       },
       {
