@@ -7,7 +7,6 @@
 // }
 
 
-
 import { Fraunces, Inter, IBM_Plex_Mono } from 'next/font/google'
 
 const fraunces = Fraunces({
@@ -119,7 +118,7 @@ export default function HomePage() {
     <div
       className={`${fraunces.variable} ${inter.variable} ${plexMono.variable} font-[family-name:var(--font-body)] text-[#20233F]`}
     >
-      <style jsx global>{`
+      <style>{`
         @keyframes rise {
           from {
             opacity: 0;
@@ -538,5 +537,3 @@ function IconArrowRight() {
     </svg>
   )
 }
-
-
