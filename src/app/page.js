@@ -10,6 +10,7 @@
 
 
 import { Fraunces, Inter, IBM_Plex_Mono } from 'next/font/google'
+import Link from 'next/link'
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -82,7 +83,6 @@ const STAGES = [
   },
 ]
 
-// Updated to match the 4 courses
 const MENTORS = [
   {
     name: 'Priya Desai',
@@ -106,7 +106,6 @@ const MENTORS = [
   },
 ]
 
-// Updated to reflect the relevant tracks
 const TESTIMONIALS = [
   {
     quote: 'The Social Media module completely changed how I look at content pacing and strategy. My engagement is up 3x.',
@@ -154,11 +153,11 @@ export default function HomePage() {
         style={{ backgroundColor: `${INK}E6` }}
       >
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#" className="flex items-center gap-2 transition hover:opacity-80">
+          <Link href="#" className="flex items-center gap-2 transition hover:opacity-80">
             <span className="font-[family-name:var(--font-display)] text-xl font-bold tracking-wide text-white">
               Gyan Master
             </span>
-          </a>
+          </Link>
 
           <nav className="hidden items-center gap-10 md:flex">
             {['Courses', 'How it works', 'Mentors', 'Pricing'].map((item) => (
@@ -173,16 +172,16 @@ export default function HomePage() {
           </nav>
 
           <div className="hidden items-center gap-6 md:flex">
-            <a href="#" className="text-sm font-medium text-white/70 transition hover:text-white">
+            <Link href="#" className="text-sm font-medium text-white/70 transition hover:text-white">
               Sign in
-            </a>
-            <a
+            </Link>
+            <Link
               href="#"
               className="rounded-full px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
               style={{ backgroundColor: GOLD, color: INK }}
             >
               Start free trial
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Nav Toggle */}
@@ -208,16 +207,16 @@ export default function HomePage() {
                   </a>
                 ))}
                 <div className="h-px w-full bg-white/10 my-2" />
-                <a href="#" className="text-base font-medium text-white/80 hover:text-white">
+                <Link href="#" className="text-base font-medium text-white/80 hover:text-white">
                   Sign in
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="inline-block w-full text-center rounded-full px-4 py-3 text-base font-semibold"
                   style={{ backgroundColor: GOLD, color: INK }}
                 >
                   Start free trial
-                </a>
+                </Link>
               </nav>
             </div>
           </details>
@@ -259,14 +258,14 @@ export default function HomePage() {
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
-              <a
+              <Link
                 href="#"
                 className="rounded-full px-8 py-3.5 text-sm font-semibold shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl hover:opacity-95"
                 style={{ backgroundColor: GOLD, color: INK }}
               >
                 Start free trial
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#how-it-works"
                 className="group flex items-center gap-2 rounded-full border border-white/20 px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-white/5"
               >
@@ -274,7 +273,7 @@ export default function HomePage() {
                 <span className="transition-transform group-hover:translate-x-1">
                   <IconArrowRight />
                 </span>
-              </a>
+              </Link>
             </div>
 
             <dl className="mt-16 grid max-w-md grid-cols-3 gap-8 border-t border-white/10 pt-8">
@@ -361,9 +360,9 @@ export default function HomePage() {
                   {course.description}
                 </p>
                 <div className="mt-6 mt-auto">
-                  <a href="#" className="inline-flex items-center gap-2 text-sm font-semibold text-[#12142B] hover:opacity-70 transition-opacity">
+                  <Link href="#" className="inline-flex items-center gap-2 text-sm font-semibold text-[#12142B] hover:opacity-70 transition-opacity">
                     View Syllabus <IconArrowRight />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -484,13 +483,13 @@ export default function HomePage() {
           <p className="text-lg text-white/70 max-w-xl">
             Join thousands of learners mastering real-world skills with guided instruction.
           </p>
-          <a
+          <Link
             href="#"
             className="mt-4 rounded-full px-8 py-4 text-base font-bold shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl"
             style={{ backgroundColor: GOLD, color: INK }}
           >
             Start your free trial today
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -506,9 +505,30 @@ export default function HomePage() {
             </p>
           </div>
           {[
-            { title: 'Platform', links: ['Courses', 'Mentors', 'Pricing'] },
-            { title: 'Company', links: ['About', 'Careers', 'Contact'] },
-            { title: 'Legal', links: ['Terms', 'Privacy', 'Refunds'] },
+            { 
+              title: 'Platform', 
+              links: [
+                { name: 'Courses', url: '#courses' }, 
+                { name: 'Mentors', url: '#mentors' }, 
+                { name: 'Pricing', url: '#pricing' }
+              ] 
+            },
+            { 
+              title: 'Company', 
+              links: [
+                { name: 'About', url: '#' }, 
+                { name: 'Careers', url: '#' }, 
+                { name: 'Contact', url: '#' }
+              ] 
+            },
+            { 
+              title: 'Legal', 
+              links: [
+                { name: 'Terms & Conditions', url: '/terms-and-conditions' }, 
+                { name: 'Privacy Policy', url: '/privacy-policy' }, 
+                { name: 'Delete Account', url: '/delete-account' }
+              ] 
+            },
           ].map((col) => (
             <div key={col.title}>
               <h4 className="font-[family-name:var(--font-mono)] text-xs font-bold uppercase tracking-[0.2em] text-white/40">
@@ -516,10 +536,10 @@ export default function HomePage() {
               </h4>
               <ul className="mt-6 space-y-3">
                 {col.links.map((l) => (
-                  <li key={l}>
-                    <a href="#" className="text-sm font-medium text-white/60 transition hover:text-white">
-                      {l}
-                    </a>
+                  <li key={l.name}>
+                    <Link href={l.url} className="text-sm font-medium text-white/60 transition hover:text-white">
+                      {l.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -529,9 +549,9 @@ export default function HomePage() {
         <div className="mx-auto mt-16 flex max-w-6xl flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row text-xs text-white/40">
           <p>© {new Date().getFullYear()} Gyan Master. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition">Twitter</a>
-            <a href="#" className="hover:text-white transition">LinkedIn</a>
-            <a href="#" className="hover:text-white transition">Instagram</a>
+            <Link href="#" className="hover:text-white transition">Twitter</Link>
+            <Link href="#" className="hover:text-white transition">LinkedIn</Link>
+            <Link href="#" className="hover:text-white transition">Instagram</Link>
           </div>
         </div>
       </footer>
