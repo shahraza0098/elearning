@@ -8,9 +8,6 @@
 
 
 
-'use client'
-
-import { useState } from 'react'
 import { Fraunces, Inter, IBM_Plex_Mono } from 'next/font/google'
 
 const fraunces = Fraunces({
@@ -34,36 +31,30 @@ const INK_2 = '#1D2044'
 const GOLD = '#D9A441'
 const TEAL = '#1F6F63'
 
-const TRACKS = [
+const COURSES = [
   {
-    label: 'Competitive Exams',
-    detail: 'JEE, NEET, UPSC — structured syllabi with daily targets.',
-    icon: IconTarget,
+    title: 'Social Media Management',
+    category: 'Social Media',
+    description: 'Learn social media management, content strategy, and growth across platforms.',
+    accent: '#D6486A',
   },
   {
-    label: 'Programming & Tech',
-    detail: 'DSA, system design, and full projects you can ship.',
-    icon: IconCode,
+    title: 'After Effects',
+    category: 'Video Editing',
+    description: 'Master Adobe After Effects from scratch and create motion graphics.',
+    accent: '#5B3FA6',
   },
   {
-    label: 'Design & Product',
-    detail: 'UX fundamentals through to a portfolio-ready case study.',
-    icon: IconLayers,
+    title: 'AI Masterclass 2026',
+    category: 'AI',
+    description: 'Learn the fundamentals of Artificial Intelligence and modern AI tools.',
+    accent: '#231A47',
   },
   {
-    label: 'Spoken English & Languages',
-    detail: 'Fluency drills with mentors who correct as you speak.',
-    icon: IconGlobe,
-  },
-  {
-    label: 'Finance & Investing',
-    detail: 'Personal finance, markets, and reading a balance sheet.',
-    icon: IconTrendingUp,
-  },
-  {
-    label: 'Study Abroad Prep',
-    detail: 'IELTS, GRE, GMAT — scored practice with real feedback.',
-    icon: IconFlag,
+    title: 'Amazon & Flipkart Business',
+    category: 'E-commerce',
+    description: 'Master Amazon & Flipkart selling with product research and scaling.',
+    accent: '#123B78',
   },
 ]
 
@@ -124,8 +115,6 @@ const TESTIMONIALS = [
 ]
 
 export default function HomePage() {
-  const [menuOpen, setMenuOpen] = useState(false)
-
   return (
     <div
       className={`${fraunces.variable} ${inter.variable} ${plexMono.variable} font-[family-name:var(--font-body)] text-[#20233F]`}
@@ -166,7 +155,7 @@ export default function HomePage() {
           </a>
 
           <nav className="hidden items-center gap-8 md:flex">
-            {['Tracks', 'How it works', 'Mentors', 'Pricing'].map((item) => (
+            {['Courses', 'How it works', 'Mentors', 'Pricing'].map((item) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
@@ -190,42 +179,41 @@ export default function HomePage() {
             </a>
           </div>
 
-          <button
-            className="text-white md:hidden"
-            aria-label="Toggle menu"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((v) => !v)}
-          >
-            {menuOpen ? <IconClose /> : <IconMenu />}
-          </button>
-        </div>
+          <details className="group md:hidden">
+            <summary className="flex cursor-pointer list-none text-white [&::-webkit-details-marker]:hidden">
+              <span className="block group-open:hidden">
+                <IconMenu />
+              </span>
+              <span className="hidden group-open:block">
+                <IconClose />
+              </span>
+            </summary>
 
-        {menuOpen && (
-          <div className="border-t border-white/10 px-6 py-4 md:hidden">
-            <nav className="flex flex-col gap-4">
-              {['Tracks', 'How it works', 'Mentors', 'Pricing'].map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                  className="text-sm text-white/80"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {item}
+            <div className="border-t border-white/10 px-6 py-4 absolute left-0 right-0 w-full" style={{ backgroundColor: INK }}>
+              <nav className="flex flex-col gap-4">
+                {['Courses', 'How it works', 'Mentors', 'Pricing'].map((item) => (
+                  <a
+                    key={item}
+                    href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="text-sm text-white/80"
+                  >
+                    {item}
+                  </a>
+                ))}
+                <a href="#" className="text-sm text-white/80">
+                  Sign in
                 </a>
-              ))}
-              <a href="#" className="text-sm text-white/80">
-                Sign in
-              </a>
-              <a
-                href="#"
-                className="mt-2 inline-block w-fit rounded-full px-4 py-2 text-sm font-medium text-[#12142B]"
-                style={{ backgroundColor: GOLD }}
-              >
-                Start free trial
-              </a>
-            </nav>
-          </div>
-        )}
+                <a
+                  href="#"
+                  className="mt-2 inline-block w-fit rounded-full px-4 py-2 text-sm font-medium text-[#12142B]"
+                  style={{ backgroundColor: GOLD }}
+                >
+                  Start free trial
+                </a>
+              </nav>
+            </div>
+          </details>
+        </div>
       </header>
 
       {/* HERO */}
@@ -284,7 +272,7 @@ export default function HomePage() {
               {[
                 ['40k+', 'learners'],
                 ['180+', 'mentors'],
-                ['12', 'subject tracks'],
+                ['4', 'courses'],
               ].map(([value, label]) => (
                 <div key={label}>
                   <dt className="font-[family-name:var(--font-display)] text-2xl text-white">
@@ -324,38 +312,51 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* TRACKS */}
-      <section id="tracks" className="mx-auto max-w-6xl px-6 py-24">
+      {/* COURSES */}
+      <section id="courses" className="mx-auto max-w-6xl px-6 py-24">
         <div className="max-w-xl">
           <span
             className="font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.25em]"
             style={{ color: TEAL }}
           >
-            Subject tracks
+            Courses
           </span>
           <h2 className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold text-[#12142B]">
-            Pick a track, not a rabbit hole
+            Four courses. Every one shipped, not stubbed.
           </h2>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {TRACKS.map(({ label, detail, icon: Icon }) => (
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {COURSES.map((course) => (
             <div
-              key={label}
-              className="group rounded-2xl border border-black/5 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              key={course.title}
+              className="group overflow-hidden rounded-2xl border border-black/5 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
             >
               <div
-                className="mb-4 flex h-10 w-10 items-center justify-center rounded-full"
-                style={{ backgroundColor: `${TEAL}1A`, color: TEAL }}
+                className="relative flex h-40 items-end p-4"
+                style={{
+                  background: `linear-gradient(160deg, ${course.accent}, ${course.accent}CC)`,
+                }}
               >
-                <Icon />
+                <span className="absolute right-3 top-3 rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-medium text-emerald-700">
+                  Published
+                </span>
+                <span className="font-[family-name:var(--font-display)] text-lg font-semibold leading-tight text-white">
+                  {course.title}
+                </span>
               </div>
-              <h3 className="font-[family-name:var(--font-display)] text-lg font-medium text-[#12142B]">
-                {label}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-[#5B6178]">
-                {detail}
-              </p>
+
+              <div className="p-5">
+                <span className="inline-block rounded-full bg-[#EEF0F6] px-3 py-1 text-xs font-medium text-[#5B6178]">
+                  {course.category}
+                </span>
+                <h3 className="mt-3 font-[family-name:var(--font-display)] text-base font-medium text-[#12142B]">
+                  {course.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-[#5B6178]">
+                  {course.description}
+                </p>
+              </div>
             </div>
           ))}
         </div>
@@ -484,7 +485,7 @@ export default function HomePage() {
             </p>
           </div>
           {[
-            { title: 'Platform', links: ['Tracks', 'Mentors', 'Pricing'] },
+            { title: 'Platform', links: ['Courses', 'Mentors', 'Pricing'] },
             { title: 'Company', links: ['About', 'Careers', 'Contact'] },
             { title: 'Legal', links: ['Terms', 'Privacy', 'Refunds'] },
           ].map((col) => (
@@ -538,56 +539,4 @@ function IconArrowRight() {
   )
 }
 
-function IconTarget() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <circle cx="12" cy="12" r="8" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="12" cy="12" r="0.5" fill="currentColor" />
-    </svg>
-  )
-}
 
-function IconCode() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <path d="M9 18l-6-6 6-6M15 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-function IconLayers() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <path d="M12 3l9 5-9 5-9-5 9-5z" strokeLinejoin="round" />
-      <path d="M3 13l9 5 9-5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-function IconGlobe() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18" strokeLinecap="round" />
-    </svg>
-  )
-}
-
-function IconTrendingUp() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <path d="M3 17l6-6 4 4 8-8" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M15 7h6v6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-function IconFlag() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <path d="M5 21V4" strokeLinecap="round" />
-      <path d="M5 4h13l-3 4 3 4H5" strokeLinejoin="round" />
-    </svg>
-  )
-}
