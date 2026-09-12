@@ -11,6 +11,7 @@
 
 import { Fraunces, Inter, IBM_Plex_Mono } from 'next/font/google'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -470,6 +471,126 @@ export default function HomePage() {
                 </cite>
               </blockquote>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* OUR PRODUCT – App Showcase */}
+      <section className="px-6 py-24 md:py-32 bg-white">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid items-center gap-16 md:grid-cols-2">
+            {/* Left: Product Info */}
+            <div className="rise-in">
+              <div className="flex items-center gap-2 mb-6">
+                <span
+                  className="inline-block h-2.5 w-2.5 rounded-sm"
+                  style={{ backgroundColor: TEAL }}
+                />
+                <span
+                  className="font-[family-name:var(--font-mono)] text-sm font-semibold uppercase tracking-[0.2em]"
+                  style={{ color: TEAL }}
+                >
+                  Our Product
+                </span>
+              </div>
+
+              <h2 className="font-[family-name:var(--font-display)] text-5xl font-bold leading-[1.1] text-[#12142B] sm:text-6xl">
+                Gyan Master
+              </h2>
+
+              <p
+                className="mt-3 font-[family-name:var(--font-display)] text-xl font-medium"
+                style={{ color: TEAL }}
+              >
+                Education through a simple digital experience.
+              </p>
+
+              <p className="mt-6 max-w-lg text-base leading-relaxed text-gray-600">
+                Gyan Master is an educational application designed to help
+                learners access useful learning resources through an accessible
+                digital experience.
+              </p>
+
+              {/* Google Play Badge */}
+              <div className="mt-10">
+                <Link
+                  href="https://play.google.com/store/apps/details?id=com.nextlearn.gyanmaster"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 rounded-xl px-6 py-3.5 text-white transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                  style={{ backgroundColor: INK }}
+                >
+                  <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
+                    <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302-2.302 2.302-2.652-2.652 2.652-2.652zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z" />
+                  </svg>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-medium uppercase tracking-wider text-white/70">
+                      Get it on
+                    </span>
+                    <span className="text-lg font-bold leading-tight -mt-0.5">
+                      Google Play
+                    </span>
+                  </div>
+                </Link>
+              </div>
+
+              {/* Category Tag */}
+              <div className="mt-10 flex items-center gap-2">
+                <span
+                  className="inline-block h-2.5 w-2.5 rounded-sm"
+                  style={{ backgroundColor: TEAL }}
+                />
+                <span className="font-[family-name:var(--font-mono)] text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  Category: Educational Application
+                </span>
+              </div>
+            </div>
+
+            {/* Right: Phone Mockup */}
+            <div className="relative flex items-center justify-center rise-in">
+              {/* Decorative background glow */}
+              <div
+                className="absolute inset-0 rounded-full opacity-[0.07] blur-3xl"
+                style={{
+                  background: `radial-gradient(circle, ${TEAL}, transparent 70%)`,
+                }}
+              />
+
+              {/* Phone frame */}
+              <div
+                className="relative overflow-hidden rounded-[3rem] shadow-2xl transition-transform duration-500 hover:-translate-y-2 hover:shadow-3xl"
+                style={{
+                  width: '300px',
+                  backgroundColor: INK,
+                  padding: '12px',
+                  boxShadow: `0 25px 80px -12px rgba(18, 20, 43, 0.4), 
+                              0 0 0 1px rgba(255,255,255,0.08) inset,
+                              0 -2px 6px rgba(255,255,255,0.05) inset`,
+                }}
+              >
+                {/* Notch */}
+                <div
+                  className="absolute left-1/2 top-3 z-20 -translate-x-1/2 rounded-full"
+                  style={{
+                    width: '100px',
+                    height: '28px',
+                    backgroundColor: INK,
+                  }}
+                />
+
+                {/* Screen */}
+                <div className="relative overflow-hidden rounded-[2.4rem]" style={{ aspectRatio: '9/19.5' }}>
+                  <Image
+                    src="/images/gyan-master-screenshot.png"
+                    alt="Gyan Master app screenshot showing courses and learning interface"
+                    fill
+                    className="object-cover object-top"
+                    sizes="300px"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
