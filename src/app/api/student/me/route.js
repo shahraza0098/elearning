@@ -96,6 +96,9 @@ export async function GET(request) {
             status: true,
 
             razorpaySubscriptionId: true,
+            provider: true,
+            revenueCatProductId: true,
+            willRenew: true,
 
             trialStartAt: true,
 
@@ -154,7 +157,7 @@ export async function GET(request) {
               ? {
                   ...student.subscription,
 
-                  plan: {
+                  plan: student.subscription.plan ? {
                     ...student.subscription.plan,
 
                     price: Number(
@@ -164,7 +167,7 @@ export async function GET(request) {
                     trialAmount: Number(
                       student.subscription.plan.trialAmount
                     ),
-                  },
+                  } : null,
                 }
               : null,
           },
