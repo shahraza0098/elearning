@@ -239,6 +239,13 @@ exports.Prisma.SubscriptionScalarFieldEnum = {
   userId: 'userId',
   planId: 'planId',
   razorpaySubscriptionId: 'razorpaySubscriptionId',
+  provider: 'provider',
+  revenueCatAppUserId: 'revenueCatAppUserId',
+  revenueCatEntitlementId: 'revenueCatEntitlementId',
+  revenueCatProductId: 'revenueCatProductId',
+  store: 'store',
+  willRenew: 'willRenew',
+  environment: 'environment',
   status: 'status',
   currentPeriodStart: 'currentPeriodStart',
   currentPeriodEnd: 'currentPeriodEnd',
@@ -267,6 +274,14 @@ exports.Prisma.PaymentScalarFieldEnum = {
   subscriptionId: 'subscriptionId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WebhookEventScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  provider: 'provider',
+  eventType: 'eventType',
+  processedAt: 'processedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -342,7 +357,8 @@ exports.Prisma.ModelName = {
   Notification: 'Notification',
   Plan: 'Plan',
   Subscription: 'Subscription',
-  Payment: 'Payment'
+  Payment: 'Payment',
+  WebhookEvent: 'WebhookEvent'
 };
 
 /**
